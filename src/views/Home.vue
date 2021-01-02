@@ -73,6 +73,14 @@ export default {
         src: 'https://i.loli.net/2021/01/01/AnaQkKuJYFqlm3s.png'
       }
     ]
-  })
+  }),
+  created: function () {
+    for (var i = 0; i < this.items.length; i++) {
+      const image = new Image()
+      image.src = this.items[i].src
+      // eslint-disable-next-line no-unused-expressions
+      image.onload
+    }
+  }
 }
 </script>
