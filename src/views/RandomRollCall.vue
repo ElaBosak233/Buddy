@@ -4,6 +4,7 @@
       <v-col cols="12" md="4" sm="4">
       </v-col>
       <v-col cols="12" md="4" sm="4" >
+        <br/>
         <v-row>
           <v-col cols="9">
             <v-text-field v-model="url"
@@ -13,7 +14,7 @@
             ></v-text-field>
           </v-col>
           <v-col cols="2">
-            <v-btn v-bind:loading="stats.loading" depressed large color="primary" @click="load(url)">载入</v-btn>
+            <v-btn v-bind:loading="stats.loading" large color="primary" @click="load(url)">载入</v-btn>
           </v-col>
         </v-row>
         <v-alert
@@ -51,6 +52,7 @@
             </v-btn>
           </v-card-actions>
         </v-card>
+        <div v-html="info.egg"></div>
       </v-col>
       <v-col cols="12" md="4" sm="4">
       </v-col>

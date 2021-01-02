@@ -37,6 +37,8 @@
           </v-list-item>
         </v-list>
       </v-menu>
+      <v-btn icon text @click="btnNavClick('首页','home')"><v-icon>fas fa-home</v-icon></v-btn>
+      <v-btn icon text @click="btnNavClick('随机点名','RandomRollCall')"><v-icon>fas fa-person-booth</v-icon></v-btn>
       <v-toolbar-title>{{ title }}</v-toolbar-title>
       <v-spacer></v-spacer>
       <v-btn icon>
