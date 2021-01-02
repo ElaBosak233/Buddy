@@ -52,6 +52,7 @@
             </v-btn>
           </v-card-actions>
         </v-card>
+        <br/>
         <div v-html="info.egg"></div>
       </v-col>
       <v-col cols="12" md="4" sm="4">
