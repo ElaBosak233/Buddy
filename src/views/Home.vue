@@ -40,7 +40,23 @@
         </v-card>
       </v-col>
       <v-col cols="12" md="8" sm="8" >
-        <v-carousel>
+        <v-carousel cycle show-arrows-on-hover hide-delimiters>
+          <template v-slot:prev="{ on, attrs }">
+            <v-btn
+              color="success"
+              v-bind="attrs"
+              v-on="on"
+              large
+            ><v-icon>fas fa-arrow-left</v-icon></v-btn>
+          </template>
+          <template v-slot:next="{ on, attrs }">
+            <v-btn
+              color="info"
+              v-bind="attrs"
+              v-on="on"
+              large
+            ><v-icon>fas fa-arrow-right</v-icon></v-btn>
+          </template>
           <v-carousel-item
             v-for="(item,i) in items"
             :key="i"

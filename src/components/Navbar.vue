@@ -37,13 +37,31 @@
           </v-list-item>
         </v-list>
       </v-menu>
-      <v-btn icon text @click="btnNavClick('首页','home')"><v-icon>fas fa-home</v-icon></v-btn>
-      <v-btn icon text @click="btnNavClick('随机点名','RandomRollCall')"><v-icon>fas fa-person-booth</v-icon></v-btn>
       <v-toolbar-title>{{ title }}</v-toolbar-title>
       <v-spacer></v-spacer>
-      <v-btn icon>
-        <i class="fas fa-heart"></i>
-      </v-btn>
+      <v-btn text @click="btnNavClick('首页','home')"><v-icon left>fas fa-home</v-icon>首页</v-btn>
+      <v-menu bottom offset-y>
+        <template v-slot:activator="{ on, attrs }">
+          <v-btn v-bind="attrs" v-on="on" text><v-icon left>fab fa-js-square</v-icon>功能</v-btn>
+        </template>
+        <v-list>
+          <v-list-item
+            v-for="(item, index) in features"
+            :key="index"
+          >
+            <v-btn
+              block
+              text
+              @click="btnNavClick(item.title,item.route)"
+            >
+              <v-list-item-icon><v-icon v-text="item.icon"></v-icon></v-list-item-icon>
+              <v-list-item-title>{{ item.title }}</v-list-item-title>
+            </v-btn>
+          </v-list-item>
+        </v-list>
+      </v-menu>
+      <v-btn text @click="btnNavClick('关于','About')"><v-icon left>fab fa-500px</v-icon>关于</v-btn>
+      <v-btn text href="https://afdian.net/@ElaBosak233" target="_blank"><v-icon left>fas fa-heart</v-icon>赞助</v-btn>
     </v-toolbar>
   </div>
 </template>
@@ -59,6 +77,18 @@ export default {
         icon: 'fas fa-home',
         route: 'home'
       },
+      {
+        title: '随机点名',
+        icon: 'fas fa-person-booth',
+        route: 'RandomRollCall'
+      },
+      {
+        title: '2048',
+        icon: 'fas fa-puzzle-piece',
+        route: '2048'
+      }
+    ],
+    features: [
       {
         title: '随机点名',
         icon: 'fas fa-person-booth',
