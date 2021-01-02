@@ -1,2 +1,58 @@
 # Buddy
- A small collection of programs written using Vue.js (🎁 Also a Christmas gift for my lovely English teacher Buddy)
+ 一个由 Vue.js 编写而来的小程序集 (🎁 仍然是给我可爱的英语老师 Buddy 的圣诞礼物)
+
+## 功能
+
+### 随机点名
+
+当你发现自己上课点人都靠 `今天几月几日` 来的话，起码也有点无趣对吧？尝试一下这个奇妙的随机算法，当然，有些数据结构，你需要自己设计，在 Buddy 这里，我们采用 `JSON` 数据格式，稍作学习就能设计出自己的学生名单！
+
+```json
+{
+  "version": "这里填写数据文件的版本号，比如 1.0.0，注意不需要去掉双引号！",
+  "refresh_rate": "这里填写名字刷新的频率，以毫秒为单位，比如 1，注意！这里一定要去掉双引号！！", // 注意这里 refresh_rate 需要使用下划线，但图片中使用了横杠，请忽略此细节
+  "data": [
+    {
+      "id": "这里填写学生的学号，比如 1，这里需要去掉双引号",
+      "name": "这里填写学生的大名，比如 巴蒂，这里请添加双引号",
+      "nick": "这里可以填写学生的昵称，比如 Buddy，这里请添加双引号",
+      "qq": "这里请填写学生的 QQ 号，比如 88888888，这里不需要双引号",
+      "avatar": "这里填写学生的头像图片地址，通常是 http://xxx.xxx.xxx/xxx.png，这里需要双引号，注意，这项数据不建议与 QQ 号共存，二选一就行了，如果都填了，会优先选择 QQ 头像作为学生头像",
+      "egg": "顾名思义，这里填写彩蛋代码，通常是 html 代码，当然，可以不填，我相信如果设计出了彩蛋的话，双引号这种东西就不需要我提醒了吧"
+    }, // 两条数据集之间请添加 ","
+    {
+      "id": "这里填写学生的学号，比如 1，这里需要去掉双引号",
+      "name": "这里填写学生的大名，比如 巴蒂，这里请添加双引号",
+      "nick": "这里可以填写学生的昵称，比如 Buddy，这里请添加双引号",
+      "qq": "这里请填写学生的 QQ 号，比如 88888888，这里不需要双引号",
+      "avatar": "这里填写学生的头像图片地址，通常是 http://xxx.xxx.xxx/xxx.png，这里需要双引号，注意，这项数据不建议与 QQ 号共存，二选一就行了，如果都填了，会优先选择 QQ 头像作为学生头像",
+      "egg": "顾名思义，这里填写彩蛋代码，通常是 html 代码，当然，可以不填，我相信如果设计出了彩蛋的话，双引号这种东西就不需要我提醒了吧"
+    } // 最后结尾的数据集不需要在尾部添加 ","
+    // ... 省略 n 条数据
+    // 特别注明！！！JSON 实际上不允许出现这样的双斜杠作为文档注释！请不要盲目复制，若复制了请删除所有紧跟双斜杠后的语句！（包括双斜杠）
+  ]
+}
+```
+
+好了，费了那么大的劲，但是 Buddy 要的是一个什么 **JSON 地址** 啊，这是小事情，推荐使用 [**JSONbin.io**](https://jsonbin.io/) 存储你设计的 JSON 数据
+
+![dashboard](https://i.loli.net/2021/01/02/8KNnusIm3aCLQ7t.png)
+![edit](https://i.loli.net/2021/01/02/GecT6jUxgZC3aB4.png)
+![success](https://i.loli.net/2021/01/02/xPHBNwVoh52AGis.png)
+
+**友情提示** 假如你的 JSON 地址是 `https://api.jsonbin.io/b/5ff0387214be54706018ab5f` 但是随着你对这个文件的更改，会出现版本号，那么请在给 Buddy 的 JSON 地址中这样写 `https://api.jsonbin.io/b/5ff0387214be54706018ab5f/latest` 代表获取最新版 JSON 数据
+
+好啊，那我怎么修改这里的 JSON 数据呢？
+
+![dashboard](https://i.loli.net/2021/01/02/CrRHWISU1nwEm52.png)
+![update](https://i.loli.net/2021/01/02/eyDswEHopmc6a8L.png)
+
+好归好，但设计数据的时候手不会累死吗？关于这点，我很负责地告诉你，当然会，因为谁这么能打啊！但没关系，总是有招的吧，打开 Excel，设计出如下表格
+
+![excel](https://i.loli.net/2021/01/02/w7iKmMSCzUbqDgs.png)
+
+然后选中表格中所有有内容的方框（包括 avatar 和 egg 及以下的空格），复制，然后去这个网站 [BEJSON](http://www.bejson.com/json/col2json/)
+
+![convert](https://i.loli.net/2021/01/02/IuXJjkQ4CmZbLOP.png)
+
+

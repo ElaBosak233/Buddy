@@ -26,11 +26,11 @@
           max-width="344"
         >
           <v-card-text>
-            <div>已载入 {{length}} 条数据，频率 {{hz}} 毫秒，数据版本 {{version}}</div>
+            <div>已载入 {{length}} 条数据，频率 {{refresh_rate}} 毫秒，数据版本 {{version}}</div>
             <v-row>
               <v-col cols="12" md="8" sm="8">
                 <p class="display-1 text--primary">
-                  {{ info.real }}
+                  {{ info.name }}
                 </p>
               </v-col>
               <v-col cols="12" md="4" sm="4">
@@ -39,10 +39,7 @@
                 </v-avatar>
               </v-col>
             </v-row>
-            <p>{{ info.name }}</p>
-            <!--div class="text--primary">
-              {{ info.description }}
-            </div-->
+            <p>{{ info.nick }}</p>
           </v-card-text>
           <v-card-actions>
             <v-btn
@@ -67,13 +64,14 @@ export default {
   data: () => ({
     url: '',
     showAlert: false,
+    loaded: false,
     json: '',
     // eslint-disable-next-line no-undef
     length: 0,
     version: 'N/A',
-    hz: 0,
-    times: 0,
-    timer: '',
+    refresh_rate: 0,
+    times: 0, // 计次
+    timer: '', // 循环
     stats: {
       id: 0,
       text: '点我开始',
@@ -81,17 +79,17 @@ export default {
       loading: false
     },
     info: {
-      name: 'Buddy',
-      real: '伍宏杰',
       id: null,
-      avatar: '',
-      description: 'My name is Buddy, and this tool is Buddy too.',
+      name: '巴蒂',
+      nick: 'Buddy',
+      avatar: 'https://i.loli.net/2021/01/02/p7wxZNiaFfutEyG.png',
       egg: null
     }
   }),
   methods: {
     load: function (url) {
       // eslint-disable-next-line no-undef,eqeqeq
+      this.loaded = false
       if (url === '') {
         this.showAlert = true
         this.stats.loading = false
@@ -103,7 +101,7 @@ export default {
       axios.get(url).then(function (res) {
         try {
           self.json = res.data
-          self.hz = res.data.hz
+          self.refresh_rate = res.data.refresh_rate
           self.length = res.data.data.length
           self.version = res.data.version
         } catch (err) {
@@ -126,6 +124,7 @@ export default {
           }
         }
         console.log(res.data)
+        self.loaded = true
         self.showAlert = false
         self.stats.loading = false
       }).catch(function (err) {
@@ -135,6 +134,10 @@ export default {
       })
     },
     go: function () {
+      if (this.loaded === false) {
+        this.showAlert = true
+        return
+      }
       if (this.stats.id === 0) {
         this.stats.id = 1
         this.stats.text = '点我结束'
@@ -144,22 +147,17 @@ export default {
           var i = Math.floor((Math.random() * this.length))
           // 初始化，删除彩蛋和描述内容
           this.info.egg = null
-          this.info.description = null
           // 覆盖 id、name、real
           this.info.id = this.json.data[i].id
           this.info.name = this.json.data[i].name
-          this.info.real = this.json.data[i].real
+          this.info.nick = this.json.data[i].nick
           // 优先选择 QQ 头像作为图案，要么就来源于图床
           if (this.json.data[i].qq != null) {
             this.info.avatar = 'http://q1.qlogo.cn/g?b=qq&nk=' + String(this.json.data[i].qq) + '&s=640'
           } else if (this.json.data[i].avatar != null) {
             this.info.avatar = String(this.json.data[i].avatar)
           }
-          // 显示描述内容（如果有）
-          if (this.json.data[i].description != null) {
-            this.info.description = String(this.json.data[i].description)
-          }
-        }, this.hz)
+        }, this.refresh_rate)
       } else {
         this.stats.id = 0
         this.stats.text = '点我开始'
