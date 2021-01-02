@@ -28,12 +28,12 @@
           <v-card-text>
             <div>已载入 {{length}} 条数据，频率 {{refresh_rate}} 毫秒，数据版本 {{version}}</div>
             <v-row>
-              <v-col cols="12" md="8" sm="8">
+              <v-col cols="8">
                 <p class="display-1 text--primary">
                   {{ info.name }}
                 </p>
               </v-col>
-              <v-col cols="12" md="4" sm="4">
+              <v-col cols="4">
                 <v-avatar size="62">
                   <img v-bind:src="info.avatar">
                 </v-avatar>
