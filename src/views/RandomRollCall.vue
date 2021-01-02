@@ -1,21 +1,26 @@
 <template>
   <v-container>
     <v-row>
-      <v-col cols="12" md="3" sm="3">
+      <v-col cols="12" md="4" sm="4">
       </v-col>
-      <v-col cols="12" md="6" sm="6" >
+      <v-col cols="12" md="4" sm="4" >
         <v-row>
-          <v-col cols="12" md="10" sm="10" >
+          <v-col cols="9">
             <v-text-field v-model="url"
               label="请提供 JSON 地址"
               single-line
               solo
             ></v-text-field>
           </v-col>
-          <v-col cols="6" md="2" sm="2" >
-            <v-btn depressed large color="primary" @click="load(url)">载入</v-btn>
+          <v-col cols="2">
+            <v-btn v-bind:loading="stats.loading" depressed large color="primary" @click="load(url)">载入</v-btn>
           </v-col>
         </v-row>
+        <v-alert
+          color="red"
+          type="error"
+          v-show="showAlert"
+        >请提供正确的 JSON 地址</v-alert>
         <v-card
           class="mx-auto"
           max-width="344"
@@ -50,7 +55,7 @@
           </v-card-actions>
         </v-card>
       </v-col>
-      <v-col cols="12" md="3" sm="3">
+      <v-col cols="12" md="4" sm="4">
       </v-col>
     </v-row>
   </v-container>
@@ -61,6 +66,7 @@ export default {
   name: 'RandomRollCall',
   data: () => ({
     url: '',
+    showAlert: false,
     json: '',
     // eslint-disable-next-line no-undef
     length: 0,
@@ -71,7 +77,8 @@ export default {
     stats: {
       id: 0,
       text: '点我开始',
-      color: '#2196F3'
+      color: '#2196F3',
+      loading: false
     },
     info: {
       name: 'Buddy',
@@ -84,14 +91,46 @@ export default {
   }),
   methods: {
     load: function (url) {
+      // eslint-disable-next-line no-undef,eqeqeq
+      if (url === '') {
+        this.showAlert = true
+        this.stats.loading = false
+        return
+      }
+      this.stats.loading = true
+      const self = this
       // eslint-disable-next-line no-undef
-      axios.get(url).then(res => {
-        this.json = res.data
-        this.hz = res.data.hz
-        this.length = res.data.data.length
-        this.version = res.data.version
+      axios.get(url).then(function (res) {
+        try {
+          self.json = res.data
+          self.hz = res.data.hz
+          self.length = res.data.data.length
+          self.version = res.data.version
+        } catch (err) {
+          self.showAlert = true
+          self.stats.loading = false
+          return
+        }
+        // eslint-disable-next-line no-undef
+        for (var i = 0; i < self.length; i++) {
+          if (res.data.data[i].qq != null) {
+            const image = new Image()
+            image.src = 'http://q1.qlogo.cn/g?b=qq&nk=' + String(self.json.data[i].qq) + '&s=640'
+            // eslint-disable-next-line no-unused-expressions
+            image.onload
+          } else if (res.data.data[i].avatar != null) {
+            const image = new Image()
+            image.src = 'http://q1.qlogo.cn/g?b=qq&nk=' + String(self.json.data[i].avatar) + '&s=640'
+            // eslint-disable-next-line no-unused-expressions
+            image.onload
+          }
+        }
         console.log(res.data)
-      }, function (err) {
+        self.showAlert = false
+        self.stats.loading = false
+      }).catch(function (err) {
+        self.showAlert = true
+        self.stats.loading = false
         console.log(err)
       })
     },
