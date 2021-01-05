@@ -13,7 +13,7 @@
               solo
             ></v-text-field>
           </v-col>
-          <v-col cols="2">
+          <v-col cols="3">
             <v-btn v-bind:loading="stats.loading" large color="primary" @click="load(url)">载入</v-btn>
           </v-col>
         </v-row>
