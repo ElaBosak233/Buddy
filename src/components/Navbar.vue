@@ -60,8 +60,7 @@
           </v-list-item>
         </v-list>
       </v-menu>
-      <v-btn text @click="btnNavClick('关于','About')"><v-icon left>fab fa-500px</v-icon>关于</v-btn>
-      <v-btn text href="https://afdian.net/@ElaBosak233" target="_blank"><v-icon left>fas fa-heart</v-icon>赞助</v-btn>
+      <v-btn text href="https://afdian.net/@ElaBosak233" target="_blank"><v-icon left>fab fa-500px</v-icon>赞助</v-btn>
     </v-toolbar>
   </div>
 </template>
