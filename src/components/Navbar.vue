@@ -97,6 +97,11 @@ export default {
         title: '2048',
         icon: 'fas fa-puzzle-piece',
         route: '2048'
+      },
+      {
+        title: '课程表',
+        icon: 'fas fa-table',
+        route: 'Curriculum'
       }
     ]
   }),

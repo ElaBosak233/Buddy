@@ -79,9 +79,9 @@ export default {
       {
         src: 'https://i.loli.net/2021/01/01/AycGBmqjKXQ1Es6.png'
       },
-      {
-        src: 'https://i.loli.net/2021/01/01/k7JoAO1M8XUT6aV.png'
-      },
+      // {
+      //   src: 'https://i.loli.net/2021/01/01/k7JoAO1M8XUT6aV.png'
+      // },
       {
         src: 'https://i.loli.net/2021/01/01/w3XCbI8PZBdKTm7.png'
       },

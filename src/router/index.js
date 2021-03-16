@@ -29,6 +29,14 @@ const routes = [
     }
   },
   {
+    path: '/Curriculum',
+    name: 'Curriculum',
+    component: () => import('../views/Curriculum.vue'),
+    meta: {
+      title: '课程表 - Buddy'
+    }
+  },
+  {
     path: '/2048',
     name: '2048',
     component: () => import('../views/2048.vue'),
