@@ -1,21 +1,80 @@
 <template>
   <v-container>
     <br />
-    <v-data-table
-    id="table"
-    :headers="headers"
-    :items="items"
-    class="elevation-5 font-weight-bold"
-    >
-      <template v-slot:item.name="{ item }">
-        <v-chip
+    <table class="table table-bordered">
+      <thead class="thead-dark">
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">第一节</th>
+        <th scope="col">第二节</th>
+        <th scope="col">第三节</th>
+        <th scope="col">第四节</th>
+        <th scope="col">第五节</th>
+        <th scope="col">第六节</th>
+        <th scope="col">第七节</th>
+        <th scope="col">第八节</th>
+        <th scope="col">第九节</th>
+        <th scope="col">第十节</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr>
+        <th scope="row"><v-chip
           color="green"
           dark
         >
-          {{ item.name }}
-        </v-chip>
-      </template>
-    </v-data-table>
+          星期一
+        </v-chip></th>
+        <td>Mark</td>
+        <td>Otto</td>
+        <td>@mdo</td>
+      </tr>
+      <tr>
+        <th scope="row"><v-chip
+          color="green"
+          dark
+        >
+          星期二
+        </v-chip></th>
+        <td>Jacob</td>
+        <td>Thornton</td>
+        <td>@fat</td>
+      </tr>
+      <tr>
+        <th scope="row"><v-chip
+          color="green"
+          dark
+        >
+          星期三
+        </v-chip></th>
+        <td>Larry</td>
+        <td>the Bird</td>
+        <td>@twitter</td>
+      </tr>
+      <tr>
+        <th scope="row"><v-chip
+          color="green"
+          dark
+        >
+          星期四
+        </v-chip></th>
+        <td>Larry</td>
+        <td>the Bird</td>
+        <td>@twitter</td>
+      </tr>
+      <tr>
+        <th scope="row"><v-chip
+          color="green"
+          dark
+        >
+          星期五
+        </v-chip></th>
+        <td>Larry</td>
+        <td>the Bird</td>
+        <td>@twitter</td>
+      </tr>
+      </tbody>
+    </table>
   </v-container>
 </template>
 
@@ -88,7 +147,8 @@ export default {
 }
 </script>
 
-<style scoped>
+<style>
+@import "https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/4.5.3/css/bootstrap.min.css";
 #table {
   font-size: 500px;
 }

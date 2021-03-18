@@ -3,6 +3,8 @@
     <v-footer
       absolute
       class="font-weight-medium"
+      color="primary"
+      dark
     >
       <v-col
         class="text-center"
