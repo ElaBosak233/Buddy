@@ -2,9 +2,10 @@
   <v-app>
     <Navbar />
     <v-main>
-      <keep-alive>
-        <router-view></router-view>
-      </keep-alive>
+<!--      <keep-alive>-->
+<!--        <router-view></router-view>-->
+<!--      </keep-alive>-->
+      <router-view></router-view>
     </v-main>
     <Footer />
   </v-app>
@@ -22,9 +23,14 @@ export default {
     // eslint-disable-next-line vue/no-unused-components
     Navbar
   },
-
   data: () => ({
     //
-  })
+  }),
+  created () {
+  }
 }
 </script>
+
+<style scoped>
+@import "https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/4.6.0/css/bootstrap.min.css"
+</style>

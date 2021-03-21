@@ -5,7 +5,6 @@
       color="primary"
       src="https://picsum.photos/1920/1080?random"
       fade-img-on-scroll
-      scroll-target="#scrolling-techniques-2"
       flat
     >
       <v-img max-height="35" max-width="35" src="https://avatars.githubusercontent.com/u/80180940?s=60&v=4"></v-img>
@@ -40,7 +39,7 @@
           </v-list-item>
         </v-list>
       </v-menu>
-      <v-btn text href="https://afdian.net/@ElaBosak233" target="_blank"><v-icon left>fab fa-500px</v-icon>赞助</v-btn>
+      <v-btn text @click="btnNavClick('关于', 'about')"><v-icon left>fab fa-500px</v-icon>关于</v-btn>
     </v-toolbar>
   </div>
 </template>
@@ -52,6 +51,11 @@ export default {
     title: 'Buddy',
     features: [
       {
+        title: '课程表',
+        icon: 'fas fa-table',
+        route: 'Curriculum'
+      },
+      {
         title: '随机点名',
         icon: 'fas fa-person-booth',
         route: 'RandomRollCall'
@@ -60,11 +64,6 @@ export default {
         title: '2048',
         icon: 'fas fa-puzzle-piece',
         route: '2048'
-      },
-      {
-        title: '课程表',
-        icon: 'fas fa-table',
-        route: 'Curriculum'
       }
     ]
   }),

@@ -10,7 +10,7 @@
         class="text-center"
         cols="12"
       >
-        {{ new Date().getFullYear() }} — <strong>Buddy.ela.ac.cn</strong>
+        {{ new Date().getFullYear() }} — <strong>Buddy.e23.in</strong>
       </v-col>
     </v-footer>
   </v-card>

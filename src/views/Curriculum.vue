@@ -1,7 +1,9 @@
 <template>
   <v-container>
     <br />
-    <table class="table table-bordered">
+    <h1 style="text-align: center; font-family: 幼圆, sans-serif; font-weight: bold">本周课程表</h1>
+    <br />
+    <table class="table table-bordered" id="table">
       <thead class="thead-dark">
       <tr>
         <th scope="col">#</th>
@@ -18,60 +20,43 @@
       </tr>
       </thead>
       <tbody>
-      <tr>
+      <tr v-for="(item, index) in items" :key="index">
         <th scope="row"><v-chip
           color="green"
           dark
         >
-          星期一
+          {{item.index}}
         </v-chip></th>
-        <td>Mark</td>
-        <td>Otto</td>
-        <td>@mdo</td>
-      </tr>
-      <tr>
-        <th scope="row"><v-chip
-          color="green"
-          dark
-        >
-          星期二
-        </v-chip></th>
-        <td>Jacob</td>
-        <td>Thornton</td>
-        <td>@fat</td>
-      </tr>
-      <tr>
-        <th scope="row"><v-chip
-          color="green"
-          dark
-        >
-          星期三
-        </v-chip></th>
-        <td>Larry</td>
-        <td>the Bird</td>
-        <td>@twitter</td>
-      </tr>
-      <tr>
-        <th scope="row"><v-chip
-          color="green"
-          dark
-        >
-          星期四
-        </v-chip></th>
-        <td>Larry</td>
-        <td>the Bird</td>
-        <td>@twitter</td>
-      </tr>
-      <tr>
-        <th scope="row"><v-chip
-          color="green"
-          dark
-        >
-          星期五
-        </v-chip></th>
-        <td>Larry</td>
-        <td>the Bird</td>
-        <td>@twitter</td>
+        <td>
+          {{item.class[0]}}
+        </td>
+        <td>
+          {{item.class[1]}}
+        </td>
+        <td>
+          {{item.class[2]}}
+        </td>
+        <td>
+          {{item.class[3]}}
+        </td>
+        <td>
+          {{item.class[4]}}
+        </td>
+        <td>
+          {{item.class[5]}}
+        </td>
+        <td>
+          {{item.class[6]}}
+        </td>
+        <td>
+          {{item.class[7]}}
+        </td>
+        <td>
+          {{item.class[8]}}
+        </td>
+        <td>
+          {{item.class[9]}}
+        </td>
       </tr>
       </tbody>
     </table>
@@ -83,73 +68,144 @@ export default {
   name: 'Curriculum',
   data: function () {
     return {
-      headers: [
-        {
-          text: '周期',
-          align: 'start',
-          sortable: false,
-          value: 'name'
-        },
-        { text: '第一节', value: '1', sortable: false },
-        { text: '第二节', value: '2', sortable: false },
-        { text: '第三节', value: '3', sortable: false },
-        { text: '第四节', value: '4', sortable: false },
-        { text: '第五节', value: '5', sortable: false },
-        { text: '第六节', value: 'iron', sortable: false },
-        { text: '第七节', value: 'iron', sortable: false },
-        { text: '第八节', value: 'iron', sortable: false },
-        { text: '第九节', value: 'iron', sortable: false },
-        { text: '第十节', value: 'iron', sortable: false }
-      ],
+      default: ['第一节', '第二节', '第三节', '第四节', '第五节', '第六节', '第七节', '第八节', '第九节', '第十节'],
       items: [
         {
-          name: '星期一',
-          1: '数学',
-          2: 6.0,
-          3: 24,
-          4: 4.0,
-          5: '1%'
+          index: '星期一',
+          class: []
         },
         {
-          name: '星期二',
-          1: 237,
-          2: 9.0,
-          3: 37,
-          4: 4.3,
-          5: '1%'
+          index: '星期二',
+          class: []
         },
         {
-          name: '星期三',
-          1: 262,
-          2: 16.0,
-          3: 23,
-          4: 6.0,
-          5: '7%'
+          index: '星期三',
+          class: []
         },
         {
-          name: '星期四',
-          1: 262,
-          2: 16.0,
-          3: 23,
-          4: 6.0,
-          5: '7%'
+          index: '星期四',
+          class: []
         },
         {
-          name: '星期五',
-          1: 262,
-          2: 16.0,
-          3: 23,
-          4: 6.0,
-          5: '7%'
-        }]
+          index: '星期五',
+          class: []
+        }
+      ]
     }
+  },
+  created () {
+    const AV = this.$store.state.AV
+    // eslint-disable-next-line no-unused-vars
+    let response = null
+    // eslint-disable-next-line no-undef
+    axios.get('https://' + this.$store.state.appId.substring(0, 8) + '.api.lncldglobal.com/1.1/schemas', { headers: { 'X-LC-Id': this.$store.state.appId, 'X-LC-Key': this.$store.state.masterKey + ',master' } }).then((res) => {
+      response = res.data.Curriculum
+      console.log(response)
+    })
+    /**
+       * 获取/创建星期一的课程表
+       */
+    let monday = null
+    if (response === 'undefined') {
+      const MondayCreate = AV.Object.extend('Curriculum')
+      const mondayCreate = new MondayCreate()
+      mondayCreate.set('week', '星期一')
+      mondayCreate.set('class', this.default)
+      mondayCreate.save().then((todo) => {
+        console.log(`保存成功，objectId：${todo.id}`)
+      })
+    }
+    monday = new AV.Query('Curriculum')
+    monday.equalTo('week', '星期一')
+    monday.first().then((todo) => {
+      this.items[0].class = todo.get('class')
+    })
+
+    /**
+     * 获取/创建星期二的课程表
+     */
+    let tuesday = null
+    if (response === 'undefined') {
+      const TuesdayCreate = AV.Object.extend('Curriculum')
+      const tuesdayCreate = new TuesdayCreate()
+      tuesdayCreate.set('week', '星期二')
+      tuesdayCreate.set('class', this.default)
+      tuesdayCreate.save().then((todo) => {
+        console.log(`保存成功，objectId：${todo.id}`)
+      })
+    }
+    tuesday = new AV.Query('Curriculum')
+    tuesday.equalTo('week', '星期二')
+    tuesday.first().then((todo) => {
+      this.items[1].class = todo.get('class')
+    })
+
+    /**
+     * 获取/创建星期三的课程表
+     */
+    let wednesday = null
+    if (response === 'undefined') {
+      const WednesdayCreate = AV.Object.extend('Curriculum')
+      const wednesdayCreate = new WednesdayCreate()
+      wednesdayCreate.set('week', '星期三')
+      wednesdayCreate.set('class', this.default)
+      wednesdayCreate.save().then((todo) => {
+        console.log(`保存成功，objectId：${todo.id}`)
+      })
+    }
+    wednesday = new AV.Query('Curriculum')
+    wednesday.equalTo('week', '星期三')
+    wednesday.first().then((todo) => {
+      this.items[2].class = todo.get('class')
+    })
+
+    /**
+     * 获取/创建星期四的课程表
+     */
+    let thursday = null
+    if (response === 'undefined') {
+      const ThursdayCreate = AV.Object.extend('Curriculum')
+      const thursdayCreate = new ThursdayCreate()
+      thursdayCreate.set('week', '星期四')
+      thursdayCreate.set('class', this.default)
+      thursdayCreate.save().then((todo) => {
+        console.log(`保存成功，objectId：${todo.id}`)
+      })
+    }
+    thursday = new AV.Query('Curriculum')
+    thursday.equalTo('week', '星期四')
+    thursday.first().then((todo) => {
+      this.items[3].class = todo.get('class')
+    })
+
+    /**
+     * 获取/创建星期五的课程表
+     */
+    let friday = null
+    if (response === 'undefined') {
+      const FridayCreate = AV.Object.extend('Curriculum')
+      const fridayCreate = new FridayCreate()
+      fridayCreate.set('week', '星期五')
+      fridayCreate.set('class', this.default)
+      fridayCreate.save().then((todo) => {
+        console.log(`保存成功，objectId：${todo.id}`)
+      })
+    }
+    friday = new AV.Query('Curriculum')
+    friday.equalTo('week', '星期五')
+    friday.first().then((todo) => {
+      this.items[4].class = todo.get('class')
+    })
+
+    console.log('%c' + '[Curriculum] 课程表渲染完成', 'color:' + 'green')
   }
 }
 </script>
 
-<style>
-@import "https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/4.5.3/css/bootstrap.min.css";
+<style scoped>
 #table {
-  font-size: 500px;
+  font-size: 20px;
+  font-family: 幼圆,sans-serif;
+  font-weight: bold;
 }
 </style>
