@@ -57,7 +57,8 @@ export default {
       id: [],
       name: [],
       nick: [],
-      qq: []
+      qq: [],
+      avatar: []
     },
     stats: {
       id: 0,
@@ -112,24 +113,7 @@ export default {
     if (AV.applicationId == null || AV.applicationKey == null) {
       console.log('%c' + '[RandomRollCall] 随机点名渲染异常，请确认是否初始化 LeanCloud，以及数据结构是否正确', 'color:' + 'red')
     } else {
-      let students = null
-      try {
-        students = new AV.Query('Students')
-        students.getObjectId()
-      } catch (e) {
-        const StudentsCreate = AV.Object.extend('Students')
-        const studentsCreate = new StudentsCreate()
-        studentsCreate.set('id', 0)
-        studentsCreate.set('name', '巴蒂')
-        studentsCreate.set('nick', 'Buddy')
-        studentsCreate.set('qq', null)
-        studentsCreate.set('avatar', 'https://i.loli.net/2021/01/02/p7wxZNiaFfutEyG.png')
-        studentsCreate.set('egg', null)
-        studentsCreate.save().then(() => {
-          console.log('%c' + '[RandomRollCall] 检测到首次运行，已初始化数据表', 'color:' + 'orange')
-        })
-      }
-      students = new AV.Query('Students')
+      const students = new AV.Query('Students')
       students.ascending('id')
       students.find().then((array) => {
         this.length = array.length

@@ -45,13 +45,6 @@
                   </div>
                   <input :disabled="textFieldDisable" v-model="$store.state.appKey" type="text" class="form-control" placeholder="请输入 AppKey" aria-label="" aria-describedby="basic-addon1">
                 </div>
-                <div class="input-group mb-3">
-                  <div class="input-group-prepend">
-                    <span class="input-group-text">MasterKey</span>
-                  </div>
-                  <input :disabled="textFieldDisable" v-model="$store.state.masterKey" type="password" class="form-control" placeholder="请输入 AppKey" aria-label="" aria-describedby="basic-addon1">
-                </div>
-                <!--              <v-btn v-bind:loading="stats.loading" large color="primary" @click="load(url)">载入</v-btn>-->
                 <v-btn block large :disabled="btnStats.disable" :color="btnStats.color" :loading="btnStats.loading" @click="load">{{btnStats.text}}</v-btn>
               </v-col>
               <v-col cols="1"></v-col>
@@ -122,12 +115,15 @@ export default {
   }),
   methods: {
     load: function () {
+      /**
+       * 初始化数据源
+       */
       try {
         const AV = this.$store.state.AV
         AV.init({
           appId: this.$store.state.appId,
           appKey: this.$store.state.appKey,
-          masterKey: this.$store.state.masterKey
+          serverURL: 'https://2mmkkopw.lc-cn-n1-shared.com'
         })
         const Exception = AV.Object.extend('Init')
         const exception = new Exception()
@@ -147,6 +143,74 @@ export default {
         console.log('%c' + '[LeanCloud]数据源初始化失败 ' + e, 'color:' + 'red')
         this.failed = true
       }
+      /**
+       * 初始化数据结构
+       */
+      const theSelf = this
+      setTimeout(function init () {
+        const AV = theSelf.$store.state.AV
+        new AV.Query('Init').find().then((array) => {
+          if (array.length === 1) {
+            try {
+              /**
+               * 初始化课程表
+               */
+              const MondayCreate = AV.Object.extend('Curriculum')
+              const mondayCreate = new MondayCreate()
+              mondayCreate.set('week', '星期一')
+              mondayCreate.set('class', ['第一节', '第二节', '第三节', '第四节', '第五节', '第六节', '第七节', '第八节', '第九节', '第十节'])
+              mondayCreate.save().then((todo) => {
+                console.log(`保存成功，objectId：${todo.id}`)
+              })
+              const TuesdayCreate = AV.Object.extend('Curriculum')
+              const tuesdayCreate = new TuesdayCreate()
+              tuesdayCreate.set('week', '星期二')
+              tuesdayCreate.set('class', ['第一节', '第二节', '第三节', '第四节', '第五节', '第六节', '第七节', '第八节', '第九节', '第十节'])
+              tuesdayCreate.save().then((todo) => {
+                console.log(`保存成功，objectId：${todo.id}`)
+              })
+              const WednesdayCreate = AV.Object.extend('Curriculum')
+              const wednesdayCreate = new WednesdayCreate()
+              wednesdayCreate.set('week', '星期三')
+              wednesdayCreate.set('class', ['第一节', '第二节', '第三节', '第四节', '第五节', '第六节', '第七节', '第八节', '第九节', '第十节'])
+              wednesdayCreate.save().then((todo) => {
+                console.log(`保存成功，objectId：${todo.id}`)
+              })
+              const ThursdayCreate = AV.Object.extend('Curriculum')
+              const thursdayCreate = new ThursdayCreate()
+              thursdayCreate.set('week', '星期四')
+              thursdayCreate.set('class', ['第一节', '第二节', '第三节', '第四节', '第五节', '第六节', '第七节', '第八节', '第九节', '第十节'])
+              thursdayCreate.save().then((todo) => {
+                console.log(`保存成功，objectId：${todo.id}`)
+              })
+              const FridayCreate = AV.Object.extend('Curriculum')
+              const fridayCreate = new FridayCreate()
+              fridayCreate.set('week', '星期五')
+              fridayCreate.set('class', ['第一节', '第二节', '第三节', '第四节', '第五节', '第六节', '第七节', '第八节', '第九节', '第十节'])
+              fridayCreate.save().then((todo) => {
+                console.log(`保存成功，objectId：${todo.id}`)
+              })
+              console.log('%c' + '[LeanCloud] 课程表结构初始化完成 ', 'color:' + 'green')
+              /**
+               * 初始化学生结构
+               */
+              const StudentsCreate = AV.Object.extend('Students')
+              const studentsCreate = new StudentsCreate()
+              studentsCreate.set('id', 0)
+              studentsCreate.set('name', '巴蒂')
+              studentsCreate.set('nick', 'Buddy')
+              studentsCreate.set('qq', null)
+              studentsCreate.set('avatar', 'https://i.loli.net/2021/01/02/p7wxZNiaFfutEyG.png')
+              studentsCreate.set('egg', null)
+              studentsCreate.save().then(() => {
+                console.log('%c' + '[LeanCloud] 学生结构初始化完成', 'color:' + 'green')
+              })
+            } catch (e) {
+              console.log('%c' + '[LeanCloud]数据结构初始化失败 ' + e, 'color:' + 'red')
+            }
+          }
+        })
+      }, 2500)
     },
     getNowFormatDate: function () {
       const date = new Date()
