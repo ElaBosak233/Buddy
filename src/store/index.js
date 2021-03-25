@@ -8,7 +8,8 @@ export default new Vuex.Store({
     dataSource: '',
     AV: require('leancloud-storage'),
     appId: '2mMkkopWRgy95gdWdnVPnJ0G-gzGzoHsz',
-    appKey: 'CnfTjuWU8d1m6BCkxjag8OMk'
+    appKey: 'CnfTjuWU8d1m6BCkxjag8OMk',
+    serverURL: 'https://2mmkkopw.lc-cn-n1-shared.com'
   },
   mutations: {
   },

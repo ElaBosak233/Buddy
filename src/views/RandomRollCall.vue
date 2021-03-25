@@ -101,10 +101,10 @@ export default {
         this.stats.text = '点我开始'
         this.stats.color = '#2196F3'
         clearInterval(this.timer)
-        // 显示彩蛋（如果有）
-        if (this.array.egg[i - 1] != null) {
-          this.info.egg = String(this.array.egg[i - 1])
-        }
+        // // 显示彩蛋（如果有）
+        // if (this.array.egg[i - 1] != null) {
+        //   this.info.egg = String(this.array.egg[i - 1])
+        // }
       }
     }
   },
@@ -113,13 +113,13 @@ export default {
     if (AV.applicationId == null || AV.applicationKey == null) {
       console.log('%c' + '[RandomRollCall] 随机点名渲染异常，请确认是否初始化 LeanCloud，以及数据结构是否正确', 'color:' + 'red')
     } else {
-      const students = new AV.Query('Students')
+      const students = new AV.Query('Student')
       students.ascending('id')
       students.find().then((array) => {
         this.length = array.length
         array.forEach((todo) => {
           this.array.id.push(todo.get('id'))
-          this.array.name.push(todo.get('name'))
+          this.array.name.push(todo.get('username'))
           this.array.nick.push(todo.get('nick'))
           this.array.qq.push(todo.get('qq'))
           this.array.avatar.push(todo.get('avatar'))
