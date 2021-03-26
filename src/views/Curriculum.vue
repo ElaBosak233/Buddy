@@ -1,6 +1,11 @@
 <template>
   <v-container>
     <br />
+    <v-alert
+      color="red"
+      type="error"
+      v-show="failed"
+    >无法连接至 LeanCloud 服务，请确认 LeanCloud 已初始化</v-alert>
     <h1 style="text-align: center; font-family: 幼圆, sans-serif; font-weight: bold">本周课程表</h1>
     <br />
     <table class="table table-bordered" id="table">
@@ -89,13 +94,15 @@ export default {
           index: '星期五',
           class: []
         }
-      ]
+      ],
+      failed: false
     }
   },
   created () {
     const AV = this.$store.state.AV
     if (AV.applicationId == null || AV.applicationKey == null) {
-      console.log('%c' + '[RandomRollCall] 随机点名渲染异常，请确认是否初始化 LeanCloud，以及数据结构是否正确', 'color:' + 'red')
+      this.failed = true
+      console.log('%c' + '[Curriculum] 课程表渲染异常，请确认是否初始化 LeanCloud，以及数据结构是否正确', 'color:' + 'red')
     } else {
       /**
        * 获取/创建星期一的课程表
@@ -142,6 +149,7 @@ export default {
         this.items[4].class = todo.get('class')
       })
 
+      this.failed = false
       console.log('%c' + '[Curriculum] 课程表渲染完成', 'color:' + 'green')
     }
   }

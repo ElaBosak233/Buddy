@@ -2,9 +2,7 @@
   <v-app>
     <Navbar />
     <v-main>
-<!--      <keep-alive>-->
-<!--        <router-view></router-view>-->
-<!--      </keep-alive>-->
+      <Toast />
       <router-view></router-view>
     </v-main>
     <Footer />
@@ -14,19 +12,22 @@
 <script>
 import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
+import Toast from '@/components/Toast'
+import Push from 'push.js'
 
 export default {
   name: 'App',
-
   components: {
     Footer,
     // eslint-disable-next-line vue/no-unused-components
-    Navbar
+    Navbar,
+    Toast
   },
   data: () => ({
     //
   }),
   created () {
+    Push.Permission.request()
   }
 }
 </script>

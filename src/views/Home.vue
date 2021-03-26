@@ -33,25 +33,30 @@
             <v-row>
               <v-col cols="1"></v-col>
               <v-col cols="10">
-                <div class="input-group mb-3">
-                  <div class="input-group-prepend">
-                    <span class="input-group-text">REST API</span>
+                <div id="form" v-show="showForm">
+                  <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text">REST API</span>
+                    </div>
+                    <input :disabled="textFieldDisable" v-model="$store.state.serverURL" type="text" class="form-control" placeholder="请输入 REST API 服务器地址" aria-label="" aria-describedby="basic-addon1">
                   </div>
-                  <input :disabled="textFieldDisable" v-model="$store.state.serverURL" type="text" class="form-control" placeholder="请输入 REST API 服务器地址" aria-label="" aria-describedby="basic-addon1">
-                </div>
-                <div class="input-group mb-3">
-                  <div class="input-group-prepend">
-                    <span class="input-group-text">AppID</span>
+                  <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text">AppID</span>
+                    </div>
+                    <input :disabled="textFieldDisable" v-model="$store.state.appId" type="text" class="form-control" placeholder="请输入 AppID" aria-label="" aria-describedby="basic-addon1">
                   </div>
-                  <input :disabled="textFieldDisable" v-model="$store.state.appId" type="text" class="form-control" placeholder="请输入 AppID" aria-label="" aria-describedby="basic-addon1">
-                </div>
-                <div class="input-group mb-3">
-                  <div class="input-group-prepend">
-                    <span class="input-group-text">AppKey</span>
+                  <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text">AppKey</span>
+                    </div>
+                    <input :disabled="textFieldDisable" v-model="$store.state.appKey" type="password" class="form-control" placeholder="请输入 AppKey" aria-label="" aria-describedby="basic-addon1">
                   </div>
-                  <input :disabled="textFieldDisable" v-model="$store.state.appKey" type="password" class="form-control" placeholder="请输入 AppKey" aria-label="" aria-describedby="basic-addon1">
                 </div>
-                <v-btn block large :disabled="btnStats.disable" :color="btnStats.color" :loading="btnStats.loading" @click="load">{{btnStats.text}}</v-btn>
+                <v-row>
+                  <v-col cols="6"><v-btn block large :disabled="btnStats.disable" :color="btnStats.color" :loading="btnStats.loading" @click="load">{{btnStats.text}}</v-btn></v-col>
+                  <v-col cols="6"><v-btn block large :disabled="disBtnStats.disable" :color="disBtnStats.color" :loading="disBtnStats.loading" @click="dis">{{disBtnStats.text}}</v-btn></v-col>
+                </v-row>
               </v-col>
               <v-col cols="1"></v-col>
             </v-row>
@@ -115,6 +120,13 @@ export default {
       color: 'success',
       disable: true
     },
+    disBtnStats: {
+      loading: false,
+      text: '卸载数据源',
+      color: 'error',
+      disable: true
+    },
+    showForm: true,
     success: false,
     failed: false,
     textFieldDisable: true
@@ -137,10 +149,15 @@ export default {
         exception.save().then((todo) => {
           todo.getObjectId()
           console.log('%c' + '[LeanCloud]数据源初始化成功', 'color:' + 'green')
+          localStorage.serverURL = this.$store.state.serverURL
+          localStorage.appId = this.$store.state.appId
+          localStorage.appKey = this.$store.state.appKey
           this.textFieldDisable = true
           this.btnStats.disable = true
           this.failed = false
           this.success = true
+          this.disBtnStats.disable = false
+          this.$store.state.stats.HomePageLaunched = true
         }, (error) => {
           console.log('%c' + '[LeanCloud]数据源初始化失败 ' + error, 'color:' + 'red')
           this.failed = true
@@ -166,7 +183,19 @@ export default {
             }
           }
         })
-      }, 2500)
+      }, 500)
+    },
+    dis: function () {
+      this.success = false
+      this.$store.state.appKey = null
+      this.$store.state.appId = null
+      this.$store.state.serverURL = null
+      localStorage.clear()
+      this.showForm = true
+      location.reload()
+      this.btnStats.disable = false
+      this.textFieldDisable = false
+      this.disBtnStats.disable = true
     },
     getNowFormatDate: function () {
       const date = new Date()
@@ -185,6 +214,9 @@ export default {
   },
   created: function () {
     const AV = this.$store.state.AV
+    /**
+     * 判断 AV 数据中 appId 和 appKey 是否存在
+     */
     if (AV.applicationKey == null || AV.applicationId == null) {
       this.textFieldDisable = false
       this.btnStats.disable = false
@@ -196,6 +228,27 @@ export default {
       image.src = this.items[i].src
       // eslint-disable-next-line no-unused-expressions
       image.onload
+    }
+  },
+  mounted: function () {
+    if (localStorage.serverURL) {
+      this.$store.state.serverURL = localStorage.serverURL
+    }
+    if (localStorage.appId) {
+      this.$store.state.appId = localStorage.appId
+    }
+    if (localStorage.appKey) {
+      this.$store.state.appKey = localStorage.appKey
+    }
+    /**
+     * 判断 $store 中是否已经存在 appKey 和 appId
+     */
+    if (this.$store.state.appKey && this.$store.state.appId) {
+      this.disBtnStats.disable = false
+      this.showForm = false
+      if (this.$store.state.stats.HomePageLaunched === false) {
+        this.load()
+      }
     }
     console.log('%c' + '[Buddy]主界面加载完成', 'color:' + 'green')
   }

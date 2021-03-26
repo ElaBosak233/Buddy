@@ -1,5 +1,12 @@
 <template>
   <v-container>
+    <br/>
+    <v-alert
+      color="red"
+      type="error"
+      v-show="failed"
+    >无法连接至 LeanCloud 服务，请确认 LeanCloud 已初始化</v-alert>
+    <br/>
     <v-row>
       <v-col cols="12" md="4" sm="4">
       </v-col>
@@ -72,7 +79,8 @@ export default {
       nick: 'Buddy',
       avatar: 'https://i.loli.net/2021/01/02/p7wxZNiaFfutEyG.png',
       egg: null
-    }
+    },
+    failed: false
   }),
   methods: {
     go: function () {
@@ -111,6 +119,7 @@ export default {
   created () {
     const AV = this.$store.state.AV
     if (AV.applicationId == null || AV.applicationKey == null) {
+      this.failed = true
       console.log('%c' + '[RandomRollCall] 随机点名渲染异常，请确认是否初始化 LeanCloud，以及数据结构是否正确', 'color:' + 'red')
     } else {
       const students = new AV.Query('Student')
