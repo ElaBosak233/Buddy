@@ -1,10 +1,10 @@
 <template>
-
+  <DIV></DIV>
 </template>
 
 <script>
 export default {
-  name: 'Dashboard'
+  name: 'PersonalSettings'
 }
 </script>
 

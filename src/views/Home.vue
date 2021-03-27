@@ -11,7 +11,7 @@
         v-show="failed"
       >无法连接至 LeanCloud 服务，请检查你的 AppID 和 AppKey 是否正确</v-alert>
     <v-row>
-      <v-col cols="12" md="4" sm="4">
+      <v-col cols="12" md="4" sm="12">
         <v-card
           class="mx-auto"
           max-width="400"
@@ -63,7 +63,7 @@
           </v-card-text>
         </v-card>
       </v-col>
-      <v-col cols="12" md="8" sm="8" >
+      <v-col cols="12" md="8" sm="12" >
         <v-carousel cycle show-arrows-on-hover hide-delimiters>
           <template v-slot:prev="{ on, attrs }">
             <v-btn
@@ -143,11 +143,9 @@ export default {
           appKey: this.$store.state.appKey,
           serverURL: this.$store.state.serverURL
         })
-        const Exception = AV.Object.extend('Init')
-        const exception = new Exception()
-        exception.set('Date', this.getNowFormatDate())
-        exception.save().then((todo) => {
-          todo.getObjectId()
+        const initialization = new AV.Object('Initialization')
+        initialization.set('Date', this.getNowFormatDate())
+        initialization.save().then((todo) => {
           console.log('%c' + '[LeanCloud]数据源初始化成功', 'color:' + 'green')
           localStorage.serverURL = this.$store.state.serverURL
           localStorage.appId = this.$store.state.appId
@@ -157,7 +155,7 @@ export default {
           this.failed = false
           this.success = true
           this.disBtnStats.disable = false
-          this.$store.state.stats.HomePageLaunched = true
+          this.$store.state.stats.LeanCloudLoaded = true
         }, (error) => {
           console.log('%c' + '[LeanCloud]数据源初始化失败 ' + error, 'color:' + 'red')
           this.failed = true
@@ -176,8 +174,9 @@ export default {
           if (array.length === 1) {
             try {
               const schema = require('../utils/schema')
-              schema.initUser(theSelf)
-              schema.initCurriculum(theSelf)
+              schema.initUser(theSelf) // 用户
+              schema.initCurriculum(theSelf) // 课程表
+              schema.initToast(theSelf) // 通知
             } catch (e) {
               console.log('%c' + '[LeanCloud]数据结构初始化失败 ' + e, 'color:' + 'red')
             }
@@ -190,12 +189,15 @@ export default {
       this.$store.state.appKey = null
       this.$store.state.appId = null
       this.$store.state.serverURL = null
-      localStorage.clear()
+      localStorage.removeItem('appKey')
+      localStorage.removeItem('appId')
+      localStorage.removeItem('serverURL')
+      localStorage.removeItem('sessionToken')
       this.showForm = true
-      location.reload()
       this.btnStats.disable = false
       this.textFieldDisable = false
       this.disBtnStats.disable = true
+      location.reload()
     },
     getNowFormatDate: function () {
       const date = new Date()
@@ -212,7 +214,7 @@ export default {
       return year + seperator1 + month + seperator1 + strDate
     }
   },
-  created: function () {
+  mounted: function () {
     const AV = this.$store.state.AV
     /**
      * 判断 AV 数据中 appId 和 appKey 是否存在
@@ -229,8 +231,6 @@ export default {
       // eslint-disable-next-line no-unused-expressions
       image.onload
     }
-  },
-  mounted: function () {
     if (localStorage.serverURL) {
       this.$store.state.serverURL = localStorage.serverURL
     }
@@ -246,9 +246,25 @@ export default {
     if (this.$store.state.appKey && this.$store.state.appId) {
       this.disBtnStats.disable = false
       this.showForm = false
-      if (this.$store.state.stats.HomePageLaunched === false) {
+      if (this.$store.state.stats.LeanCloudLoaded === false) {
         this.load()
       }
+    }
+    localStorage.appFirstLoaded = true
+    /**
+     * 检查 localStorage 是否含有 sessionToken，若有，则读取并登录
+     */
+    if (localStorage.sessionToken) {
+      const AV = this.$store.state.AV
+      AV.User.become(localStorage.sessionToken).then((res) => {
+        this.$store.state.userInfo.nick = res.get('nick')
+        this.$store.state.userInfo.qq = res.get('qq')
+        this.$store.state.userInfo.email = res.getEmail()
+        this.$store.state.userInfo.permission = res.get('permission')
+        this.$store.state.userInfo.objectId = res.getObjectId()
+        this.$store.state.userInfo.logined = true
+        this.$store.state.userInfo.username = res.getUsername()
+      })
     }
     console.log('%c' + '[Buddy]主界面加载完成', 'color:' + 'green')
   }

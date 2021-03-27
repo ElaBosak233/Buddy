@@ -5,17 +5,28 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    dataSource: '',
     AV: require('leancloud-storage'),
+    NavbarTitle: 'Buddy',
     // appId: '2mMkkopWRgy95gdWdnVPnJ0G-gzGzoHsz',
     // appKey: 'CnfTjuWU8d1m6BCkxjag8OMk',
-    // serverURL: 'https://2mmkkopw.lc-cn-n1-shared.com'
+    // serverURL: 'https://2mmkkopw.lc-cn-n1-shared.com',
     appId: '',
     appKey: '',
     serverURL: '',
     stats: {
-      HomePageLaunched: false
+      LeanCloudLoaded: false
+    },
+    userInfo: {
+      logined: false,
+      username: '',
+      objectId: '',
+      nick: '',
+      email: '',
+      qq: '',
+      permission: ''
     }
+  },
+  getters: {
   },
   mutations: {
   },

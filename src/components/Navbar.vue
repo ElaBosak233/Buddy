@@ -14,7 +14,7 @@
         label
       >
         <v-toolbar-title style="font-weight: bold">
-          {{ title }}
+          {{ this.$store.state.NavbarTitle }}
         </v-toolbar-title>
       </v-chip>
       <v-spacer></v-spacer>
@@ -39,7 +39,7 @@
           </v-list-item>
         </v-list>
       </v-menu>
-      <v-btn text @click="btnNavClick('关于', 'about')"><v-icon left>fab fa-500px</v-icon>关于</v-btn>
+      <v-btn text @click="btnNavClick('控制台', 'console')"><v-icon left>fab fa-500px</v-icon>我</v-btn>
     </v-toolbar>
   </div>
 </template>
@@ -48,7 +48,6 @@
 export default {
   name: 'Navbar',
   data: () => ({
-    title: 'Buddy',
     features: [
       {
         title: '课程表',
@@ -56,14 +55,14 @@ export default {
         route: 'Curriculum'
       },
       {
+        title: '公告板',
+        icon: 'fas fa-puzzle-piece',
+        route: 'Toast'
+      },
+      {
         title: '随机点名',
         icon: 'fas fa-person-booth',
         route: 'RandomRollCall'
-      },
-      {
-        title: '2048',
-        icon: 'fas fa-puzzle-piece',
-        route: '2048'
       }
     ]
   }),
@@ -71,10 +70,15 @@ export default {
     btnNavClick: function (name, routeName) {
       if (routeName === 'home') {
         this.$router.push({ path: '/' })
-        this.title = 'Buddy'
+        this.$store.state.NavbarTitle = 'Buddy'
       } else {
-        this.$router.push({ path: `/${routeName}` })
-        this.title = name
+        if (this.$route.path === '/login' && `/${routeName}` === '/console') {
+          return
+        }
+        if (this.$route.path !== `/${routeName}`) {
+          this.$router.push({ path: `/${routeName}` })
+          this.$store.state.NavbarTitle = name
+        }
       }
     }
   }
