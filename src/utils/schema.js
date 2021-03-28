@@ -9,7 +9,7 @@ export function initUser (self) {
   admin.setPassword('admin')
   admin.set('nick', '管理员')
   admin.set('permission', 'admin')
-  admin.set('qq', '')
+  admin.set('qq', '20210328')
   admin.set('avatar', '')
   admin.signUp().then()
   /**
@@ -43,7 +43,7 @@ export function initCurriculum (self) {
   const WednesdayCreate = AV.Object.extend('Curriculum')
   const wednesdayCreate = new WednesdayCreate()
   wednesdayCreate.set('week', '星期三')
-  wednesdayCreate.set('class', ['共价', '心理', '数学', '化学', '物理', '体育', '体育', '体育', '社团', '语文'])
+  wednesdayCreate.set('class', ['体育', '心理', '数学', '化学', '物理', '体育', '体育', '体育', '社团', '语文'])
   wednesdayCreate.save().then()
   const ThursdayCreate = AV.Object.extend('Curriculum')
   const thursdayCreate = new ThursdayCreate()
@@ -53,7 +53,7 @@ export function initCurriculum (self) {
   const FridayCreate = AV.Object.extend('Curriculum')
   const fridayCreate = new FridayCreate()
   fridayCreate.set('week', '星期五')
-  fridayCreate.set('class', ['语文', '体育', '共价', '心理', '体育', '体育', '语文', '数学', '英语', '技术'])
+  fridayCreate.set('class', ['语文', '体育', '体育', '心理', '体育', '体育', '语文', '数学', '英语', '技术'])
   fridayCreate.save().then()
   console.log('%c' + '[LeanCloud] 课程表结构初始化完成 ', 'color:' + 'green')
 }

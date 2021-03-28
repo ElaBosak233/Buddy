@@ -2,6 +2,7 @@
   <div>
     <br/>
     <v-navigation-drawer
+      id="sideBar"
       permanent
       expand-on-hover
       absolute
@@ -21,7 +22,8 @@
             <v-list-item-subtitle>{{ User.username }}</v-list-item-subtitle>
           </v-list-item-content>
         </v-list-item>
-        <v-list-item dense link @click="Show = {}; Show.personalSettings = true">
+        <v-divider v-show="List.personalSettings"></v-divider>
+        <v-list-item v-show="List.personalSettings" dense link @click="Show = {}; Show.personalSettings = true">
           <v-list-item-icon>
             <v-icon color="blue">fas fa-user-cog</v-icon>
           </v-list-item-icon>
@@ -33,7 +35,7 @@
         nav
         dense
       >
-        <v-list-item link @click="Show = {}; Show.microPrograms = true">
+        <v-list-item v-show="List.microPrograms" link @click="Show = {}; Show.microPrograms = true">
           <v-list-item-icon>
             <v-icon>mdi-folder</v-icon>
           </v-list-item-icon>
@@ -45,11 +47,11 @@
           </v-list-item-icon>
           <v-list-item-title>班级管理</v-list-item-title>
         </v-list-item>
-        <v-list-item link>
+        <v-list-item link v-show="List.permissionSettings">
           <v-list-item-icon>
-            <v-icon>mdi-star</v-icon>
+            <v-icon color="orange">mdi-star</v-icon>
           </v-list-item-icon>
-          <v-list-item-title>Starred</v-list-item-title>
+          <v-list-item-title><div style="color: orange">权限管理</div></v-list-item-title>
         </v-list-item>
       </v-list>
 
@@ -63,7 +65,7 @@
           <v-list-item-icon>
             <v-icon color="red">fas fa-sign-out-alt</v-icon>
           </v-list-item-icon>
-          <v-list-item-title><div style="color: red">退出登录</div></v-list-item-title>
+          <v-list-item-title><div style="color: red; font-weight: bold">退出登录</div></v-list-item-title>
         </v-list-item>
       </v-list>
     </v-navigation-drawer>
@@ -98,10 +100,16 @@ export default {
         microPrograms: false,
         personalSettings: false
       },
+      List: {
+        microPrograms: false,
+        personalSettings: true,
+        permissionSettings: false
+      },
       User: {
         avatar: '',
         username: '',
-        nick: ''
+        nick: '',
+        permission: ''
       }
     }
   },
@@ -119,12 +127,21 @@ export default {
     this.User.username = AV.User.current().getUsername()
     this.User.nick = AV.User.current().get('nick')
     this.User.avatar = AV.User.current().get('avatar')
+    this.User.permission = AV.User.current().get('permission')
+    /**
+     * 权限判断
+     */
+    if (this.User.permission === ('admin' || 'teacher' || 'monitor')) {
+      this.List.microPrograms = true
+      this.List.permissionSettings = true
+    }
+    console.log('%c' + '[Console] 控制台渲染完成', 'color:' + 'green')
   }
 }
 </script>
 
 <style scoped>
-.container {
+#container {
   padding-left: 70px;
 }
 </style>

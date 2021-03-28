@@ -170,7 +170,7 @@ export default {
       const theSelf = this
       setTimeout(function init () {
         const AV = theSelf.$store.state.AV
-        new AV.Query('Init').find().then((array) => {
+        new AV.Query('Initialization').find().then((array) => {
           if (array.length === 1) {
             try {
               const schema = require('../utils/schema')

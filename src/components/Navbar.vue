@@ -3,7 +3,7 @@
     <v-toolbar
       dark
       color="primary"
-      src="https://picsum.photos/1920/1080?random"
+      src="http://l-by.cn/api/gqapi/gqapi.php"
       fade-img-on-scroll
       flat
     >

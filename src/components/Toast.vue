@@ -49,7 +49,7 @@ export default {
         const ToastData = this.ToastData
         toastQuery.first().then(function (res) {
           const d = new Date()
-          if (d.getTime() - res.get('updatedAt').getTime() <= 11000) {
+          if (d.getTime() - res.get('updatedAt').getTime() <= 10000) {
             /**
              * Snackbar 发送消息
              */
