@@ -12,18 +12,8 @@ export function initUser (self) {
   admin.set('qq', '20210328')
   admin.set('avatar', '')
   admin.set('id', 0)
+  admin.set('uid', 0)
   admin.signUp().then()
-  // /**
-  //  * 学生身份 Buddy 生成
-  //  */
-  // const buddyStudent = new AV.Object('Student')
-  // buddyStudent.set('username', 'buddy')
-  // buddyStudent.set('uid', 200101490800)
-  // buddyStudent.set('id', 0)
-  // buddyStudent.set('nick', '巴蒂')
-  // buddyStudent.set('avatar', 'https://i.loli.net/2021/01/02/p7wxZNiaFfutEyG.png')
-  // buddyStudent.set('qq', null)
-  // buddyStudent.save().then()
 }
 
 export function initCurriculum (self) {
