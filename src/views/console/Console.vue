@@ -47,7 +47,7 @@
           </v-list-item-icon>
           <v-list-item-title>班级管理</v-list-item-title>
         </v-list-item>
-        <v-list-item link v-show="List.permissionSettings">
+        <v-list-item link v-show="List.permissionSettings" @click="Show = {}; Show.permissionSettings = true">
           <v-list-item-icon>
             <v-icon color="orange">mdi-star</v-icon>
           </v-list-item-icon>
@@ -82,6 +82,7 @@
     <v-container id="container">
       <PersonalSettings v-show="Show.personalSettings" />
       <MicroPrograms v-show="Show.microPrograms" />
+      <PermissionSettings v-show="Show.permissionSettings" />
     </v-container>
 
   </div>
@@ -90,15 +91,17 @@
 <script>
 import MicroPrograms from '@/views/console/list/MicroPrograms'
 import PersonalSettings from '@/views/console/list/PersonalSettings'
+import PermissionSettings from '@/views/console/list/PermissionSettings'
 export default {
   name: 'Dashboard',
-  components: { PersonalSettings, MicroPrograms },
+  components: { PermissionSettings, PersonalSettings, MicroPrograms },
   data: () => {
     return {
       Show: {
         homePage: true,
         microPrograms: false,
-        personalSettings: false
+        personalSettings: false,
+        permissionSettings: false
       },
       List: {
         microPrograms: false,

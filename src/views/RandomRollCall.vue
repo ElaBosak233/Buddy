@@ -97,22 +97,13 @@ export default {
           this.info.id = this.array.id[i]
           this.info.name = this.array.name[i]
           this.info.nick = this.array.nick[i]
-          // 优先选择 QQ 头像作为图案，要么就来源于图床
-          if (this.array.qq[i] != null) {
-            this.info.avatar = 'http://q1.qlogo.cn/g?b=qq&nk=' + String(this.array.qq[i]) + '&s=640'
-          } else if (this.array.avatar[i] != null) {
-            this.info.avatar = String(this.array.avatar[i])
-          }
+          this.info.avatar = this.array.avatar[i]
         }, this.refresh_rate)
       } else {
         this.stats.id = 0
         this.stats.text = '点我开始'
         this.stats.color = '#2196F3'
         clearInterval(this.timer)
-        // // 显示彩蛋（如果有）
-        // if (this.array.egg[i - 1] != null) {
-        //   this.info.egg = String(this.array.egg[i - 1])
-        // }
       }
     }
   },
@@ -122,7 +113,8 @@ export default {
       this.failed = true
       console.log('%c' + '[RandomRollCall] 随机点名渲染异常，请确认是否初始化 LeanCloud，以及数据结构是否正确', 'color:' + 'red')
     } else {
-      const students = new AV.Query('Student')
+      const students = new AV.Query('_User')
+      students.equalTo('permission', 'student')
       students.ascending('id')
       students.find().then((array) => {
         this.length = array.length
@@ -134,17 +126,10 @@ export default {
           this.array.avatar.push(todo.get('avatar'))
         })
         for (let i = 0; i < self.length; i++) {
-          if (this.array.qq[i] != null) {
-            const image = new Image()
-            image.src = 'http://q1.qlogo.cn/g?b=qq&nk=' + String(this.array.qq[i]) + '&s=640'
-            // eslint-disable-next-line no-unused-expressions
-            image.onload
-          } else if (this.array.avatar[i] != null) {
-            const image = new Image()
-            image.src = 'http://q1.qlogo.cn/g?b=qq&nk=' + String(this.array.avatar[i]) + '&s=640'
-            // eslint-disable-next-line no-unused-expressions
-            image.onload
-          }
+          const image = new Image()
+          image.src = this.array.avatar[i]
+          // eslint-disable-next-line no-unused-expressions
+          image.onload
         }
       })
       console.log('%c' + '[RandomRollCall] 随机点名渲染完成', 'color:' + 'green')

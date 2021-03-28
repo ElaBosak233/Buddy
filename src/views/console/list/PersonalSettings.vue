@@ -36,9 +36,46 @@
         </v-btn>
       </template>
     </v-snackbar>
+    <v-snackbar
+      v-model="stats.delete"
+      color="error"
+      bottom
+      right
+    >
+      <v-icon left>fab fa-telegram-plane</v-icon>已删除，即将刷新
+      <template v-slot:action="{ attrs }">
+        <v-btn
+          color="white"
+          text
+          v-bind="attrs"
+          @click="stats.delete = false"
+        >
+          关闭
+        </v-btn>
+      </template>
+    </v-snackbar>
+    <v-snackbar
+      v-model="stats.migrate"
+      color="orange"
+      bottom
+      right
+    >
+      <v-icon left>fab fa-telegram-plane</v-icon>已迁移，即将刷新
+      <template v-slot:action="{ attrs }">
+        <v-btn
+          color="white"
+          text
+          v-bind="attrs"
+          @click="stats.migrate = false"
+        >
+          关闭
+        </v-btn>
+      </template>
+    </v-snackbar>
     <!-- 资料修改 -->
     <v-card outlined shaped elevation="2">
-      <v-card-title><v-icon left>fas fa-user-edit</v-icon>个人资料更改</v-card-title>
+      <v-card-title class="headline grey lighten-2"><v-icon left>fas fa-user-edit</v-icon>个人资料更改</v-card-title>
+      <br/>
       <v-form v-model="valid">
         <v-container>
           <v-row>
@@ -167,7 +204,7 @@
           <v-card-title><v-icon left>fas fa-times</v-icon>删除账号</v-card-title>
           <v-card-subtitle v-show="deleteUser.disable">管理员账号无法删除</v-card-subtitle>
           <v-card-text>
-            <v-btn block color="red darken-4" @click="deleteConfirm = true" :disabled="deleteUser">
+            <v-btn block color="red darken-4" @click="deleteUser.confirm = true" :disabled="deleteUser.disable">
               账号将被永久删除，请谨慎考虑！（真的很久！！）
             </v-btn>
           </v-card-text>
@@ -181,6 +218,7 @@
               最后确认一遍
             </v-card-title>
             <v-card-text>
+              <br/>
               你真的要删除这个账号吗？
             </v-card-text>
             <v-divider></v-divider>
@@ -189,7 +227,7 @@
               <v-btn
                 color="red"
                 text
-                @click="deleteUser.confirm = false"
+                @click="deleteUserGo"
               >
                 确定删除
               </v-btn>
@@ -197,7 +235,43 @@
           </v-card>
         </v-dialog>
       </v-col>
-      <v-col cols="12" md="6"></v-col>
+      <v-col cols="12" md="6">
+        <!-- 迁移账号 -->
+        <v-card outlined shaped dark color="orange" elevation="2">
+          <v-card-title><v-icon left>fas fa-user-graduate</v-icon>迁移至 “学生”</v-card-title>
+          <v-card-subtitle v-show="migrateUser.disable">已设置为 <code>admin</code>，<code>monitor</code>，<code>teacher</code> 和 <code>student</code> 的用户无法迁移</v-card-subtitle>
+          <v-card-text>
+            <v-btn block color="orange darken-4" @click="migrateUser.confirm = true" :disabled="migrateUser.disable">
+              账号将被永久迁移至 “学生” 权限组，请谨慎考虑！
+            </v-btn>
+          </v-card-text>
+        </v-card>
+        <v-dialog
+          v-model="migrateUser.confirm"
+          width="500"
+        >
+          <v-card>
+            <v-card-title class="headline grey lighten-2">
+              最后确认一遍
+            </v-card-title>
+            <v-card-text>
+              <br/>
+              你真的要迁移这个账号吗？
+            </v-card-text>
+            <v-divider></v-divider>
+            <v-card-actions>
+              <v-spacer></v-spacer>
+              <v-btn
+                color="red"
+                text
+                @click="migrateUserGo"
+              >
+                确定迁移
+              </v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-dialog>
+      </v-col>
     </v-row>
   </v-container>
 </template>
@@ -211,9 +285,15 @@ export default {
       confirm: false,
       disable: false
     },
+    migrateUser: {
+      confirm: false,
+      disable: false
+    },
     stats: {
       error: false,
-      ok: false
+      ok: false,
+      delete: false,
+      migrate: false
     },
     username: '',
     nick: '',
@@ -256,6 +336,27 @@ export default {
       }, (e) => {
         this.stats.error = true
       })
+    },
+    deleteUserGo: function () {
+      const AV = this.$store.state.AV
+      const user = AV.User.current()
+      user.destroy()
+      this.deleteUser.confirm = false
+      this.stats.delete = true
+      localStorage.removeItem('sessionToken')
+      setTimeout(function () {
+        location.reload()
+      }, 1000)
+    },
+    migrateUserGo: function () {
+      const AV = this.$store.state.AV
+      AV.User.current().set('permission', 'student')
+      AV.User.current().save().then()
+      this.migrateUser.confirm = false
+      this.stats.migrate = true
+      setTimeout(function () {
+        location.reload()
+      }, 1000)
     }
   },
   mounted () {
@@ -268,6 +369,9 @@ export default {
     this.permission = AV.User.current().get('permission')
     if (this.permission === 'admin') {
       this.deleteUser.disable = true
+    }
+    if (this.permission === ('admin' || 'monitor' || 'teacher' || 'student')) {
+      this.migrateUser.disable = true
     }
   }
 }
