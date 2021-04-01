@@ -113,6 +113,21 @@
               md="4"
             >
               <v-text-field
+                v-model="real"
+                :rules="nameRules"
+                :counter="5"
+                label="真实姓名"
+                outlined
+                dense
+                required
+              ></v-text-field>
+            </v-col>
+
+            <v-col
+              cols="12"
+              md="4"
+            >
+              <v-text-field
                 v-model="email"
                 :rules="emailRules"
                 label="Email"
@@ -121,11 +136,10 @@
                 dense
               ></v-text-field>
             </v-col>
-          </v-row>
-          <v-row>
+
             <v-col
               cols="12"
-              md="4"
+              md="2"
             >
               <v-text-field
                 v-model="qq"
@@ -154,7 +168,7 @@
 
             <v-col
               cols="12"
-              md="4"
+              md="2"
             >
               <v-text-field
                 v-model="permission"
@@ -297,6 +311,7 @@ export default {
     },
     username: '',
     nick: '',
+    real: '',
     qq: '',
     avatar: '',
     permission: '',
@@ -323,6 +338,7 @@ export default {
       AV.User.current().set('qq', this.qq)
       AV.User.current().set('avatar', 'http://q1.qlogo.cn/g?b=qq&nk=' + this.qq + '&s=640')
       AV.User.current().set('nick', this.nick)
+      AV.User.current().set('real', this.real)
       AV.User.current().setEmail(this.email)
       if (this.Password.new !== '') {
         AV.User.current().setPassword(this.Password.new)
@@ -367,6 +383,7 @@ export default {
     this.qq = AV.User.current().get('qq')
     this.avatar = AV.User.current().get('avatar')
     this.permission = AV.User.current().get('permission')
+    this.real = AV.User.current().get('real')
     if (this.permission === 'admin') {
       this.deleteUser.disable = true
     }

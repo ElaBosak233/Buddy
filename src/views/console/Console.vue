@@ -45,13 +45,13 @@
           <v-list-item-icon>
             <v-icon>mdi-account-multiple</v-icon>
           </v-list-item-icon>
-          <v-list-item-title>班级管理</v-list-item-title>
+          <v-list-item-title>作业 & 项目</v-list-item-title>
         </v-list-item>
         <v-list-item link v-show="List.permissionSettings" @click="Show = {}; Show.permissionSettings = true">
           <v-list-item-icon>
             <v-icon color="orange">mdi-star</v-icon>
           </v-list-item-icon>
-          <v-list-item-title><div style="color: orange">权限管理</div></v-list-item-title>
+          <v-list-item-title><div style="color: orange">班级管理</div></v-list-item-title>
         </v-list-item>
       </v-list>
 

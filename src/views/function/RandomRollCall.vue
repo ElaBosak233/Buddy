@@ -120,7 +120,7 @@ export default {
         this.length = array.length
         array.forEach((todo) => {
           this.array.id.push(todo.get('id'))
-          this.array.name.push(todo.get('username'))
+          this.array.name.push(todo.get('real'))
           this.array.nick.push(todo.get('nick'))
           this.array.qq.push(todo.get('qq'))
           this.array.avatar.push(todo.get('avatar'))

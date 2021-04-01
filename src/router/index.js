@@ -31,7 +31,7 @@ const routes = [
   {
     path: '/Toast',
     name: 'Toast',
-    component: () => import('../views/ToastBoard.vue'),
+    component: () => import('../views/function/ToastBoard.vue'),
     meta: {
       title: '公告板'
     }
@@ -39,7 +39,7 @@ const routes = [
   {
     path: '/RandomRollCall',
     name: 'RandomRollCall',
-    component: () => import('../views/RandomRollCall.vue'),
+    component: () => import('../views/function/RandomRollCall.vue'),
     meta: {
       title: '随机点名'
     }
@@ -47,7 +47,7 @@ const routes = [
   {
     path: '/Curriculum',
     name: 'Curriculum',
-    component: () => import('../views/Curriculum.vue'),
+    component: () => import('../views/function/Curriculum.vue'),
     meta: {
       title: '课程表'
     }
