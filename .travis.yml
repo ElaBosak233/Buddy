@@ -7,4 +7,4 @@ script:
   - yarn global add codecov
 cache: yarn  
 after_success:
-  - codecov
+  - codecov -f coverage/*.json
