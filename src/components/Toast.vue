@@ -16,7 +16,7 @@
           v-bind="attrs"
           @click="ToastData.open = false"
         >
-          <v-icon>far fa-calendar-check</v-icon>
+          <v-icon left>fas fa-check</v-icon> <div style="font-weight: bold">知晓</div>
         </v-btn>
       </template>
     </v-snackbar>

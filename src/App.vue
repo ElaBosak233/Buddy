@@ -4,7 +4,7 @@
     <Agreement />
     <v-main>
       <Toast />
-      <router-view></router-view>
+      <router-view v-if="isRouterShow"></router-view>
     </v-main>
     <Footer />
   </v-app>
@@ -16,6 +16,9 @@ import Footer from '@/components/Footer'
 import Agreement from '@/components/Agreement'
 import Toast from '@/components/Toast'
 import Push from 'push.js'
+import VConsole from 'vconsole'
+// eslint-disable-next-line no-unused-vars
+const vConsole = new VConsole()
 
 export default {
   name: 'App',
@@ -25,8 +28,13 @@ export default {
     Navbar,
     Toast
   },
+  provide () {
+    return {
+      reload: this.reload
+    }
+  },
   data: () => ({
-    //
+    isRouterShow: true
   }),
   created () {
     /**
@@ -38,6 +46,13 @@ export default {
      */
     if (this.$router.path !== '/') {
       this.$router.replace('/')
+    }
+  },
+  methods: {
+    async reload () {
+      this.isRouterShow = false
+      await this.$nextTick()
+      this.isRouterShow = true
     }
   }
 }

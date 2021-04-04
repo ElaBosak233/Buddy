@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <v-container>
     <v-row>
       <v-col cols="12" md="4">
         <!-- 课程表 -->
@@ -191,6 +191,14 @@
           </v-card-text>
           <v-card-actions>
             <v-btn
+              color="red"
+              text
+              @click="clearToast"
+            >
+              清除通知
+            </v-btn>
+            <v-spacer></v-spacer>
+            <v-btn
               color="orange"
               text
               @click="Toast.toastSendForm = true"
@@ -291,11 +299,29 @@
             </v-btn>
           </template>
         </v-snackbar>
+        <v-snackbar
+          v-model="Toast.clear"
+          color="purple"
+          bottom
+          right
+        >
+          <v-icon left>fab fa-telegram-plane</v-icon>已清除
+          <template v-slot:action="{ attrs }">
+            <v-btn
+              color="white"
+              text
+              v-bind="attrs"
+              @click="Toast.clear = false"
+            >
+              关闭
+            </v-btn>
+          </template>
+        </v-snackbar>
       </v-col>
       <v-col cols="12" md="4">
       </v-col>
     </v-row>
-  </div>
+  </v-container>
 </template>
 
 <script>
@@ -307,6 +333,7 @@ export default {
         toastSendForm: false,
         success: false,
         fail: false,
+        clear: false,
         msg: {
           title: '',
           content: '',
@@ -373,6 +400,14 @@ export default {
       } finally {
         this.Toast.toastSendForm = false
       }
+    },
+    clearToast: function () {
+      const AV = this.$store.state.AV
+      const query = new AV.Query('Toast')
+      query.find().then((todo) => {
+        AV.Object.destroyAll(todo)
+        this.Toast.clear = true
+      })
     },
     getCurriculum: function () {
       const AV = this.$store.state.AV

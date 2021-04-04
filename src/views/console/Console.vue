@@ -14,7 +14,7 @@
           </v-list-item-avatar>
         </v-list-item>
 
-        <v-list-item link @click="Show = {}; Show.homePage = true">
+        <v-list-item link @click="$store.state.consoleShow = {}; $store.state.consoleShow.homePage = true">
           <v-list-item-content>
             <v-list-item-title class="title">
               {{ User.nick }}
@@ -23,7 +23,7 @@
           </v-list-item-content>
         </v-list-item>
         <v-divider v-show="List.personalSettings"></v-divider>
-        <v-list-item v-show="List.personalSettings" dense link @click="Show = {}; Show.personalSettings = true">
+        <v-list-item v-show="List.personalSettings" dense link @click="$store.state.consoleShow = {}; $store.state.consoleShow.personalSettings = true">
           <v-list-item-icon>
             <v-icon color="blue">fas fa-user-cog</v-icon>
           </v-list-item-icon>
@@ -35,23 +35,23 @@
         nav
         dense
       >
-        <v-list-item v-show="List.microPrograms" link @click="Show = {}; Show.microPrograms = true">
+        <v-list-item v-show="List.microPrograms" link @click="$store.state.consoleShow = {}; $store.state.consoleShow.microPrograms = true">
           <v-list-item-icon>
             <v-icon>mdi-folder</v-icon>
           </v-list-item-icon>
           <v-list-item-title>小程序</v-list-item-title>
         </v-list-item>
-        <v-list-item link>
+        <v-list-item link v-show="List.classSettings" @click="$store.state.consoleShow = {}; $store.state.consoleShow.projectSettings = true">
           <v-list-item-icon>
             <v-icon>mdi-account-multiple</v-icon>
           </v-list-item-icon>
           <v-list-item-title>作业 & 项目</v-list-item-title>
         </v-list-item>
-        <v-list-item link v-show="List.permissionSettings" @click="Show = {}; Show.permissionSettings = true">
+        <v-list-item link v-show="List.classSettings" @click="$store.state.consoleShow = {}; $store.state.consoleShow.classSettings = true">
           <v-list-item-icon>
             <v-icon color="orange">mdi-star</v-icon>
           </v-list-item-icon>
-          <v-list-item-title><div style="color: orange">班级管理</div></v-list-item-title>
+          <v-list-item-title><div style="color: orange">班级</div></v-list-item-title>
         </v-list-item>
       </v-list>
 
@@ -70,7 +70,7 @@
       </v-list>
     </v-navigation-drawer>
 
-    <div id="HomePage" v-show="Show.homePage">
+    <div id="HomePage" v-show="$store.state.consoleShow.homePage">
       <div class="jumbotron jumbotron-fluid">
         <div class="container">
           <h1 class="display-4" style="font-weight: bold;"><v-icon left>fas fa-terminal</v-icon>Buddy 控制台</h1>
@@ -80,9 +80,10 @@
       </div>
     </div>
     <v-container id="container">
-      <PersonalSettings v-show="Show.personalSettings" />
-      <MicroPrograms v-show="Show.microPrograms" />
-      <PermissionSettings v-show="Show.permissionSettings" />
+      <PersonalSettings v-show="$store.state.consoleShow.personalSettings" />
+      <MicroPrograms v-show="$store.state.consoleShow.microPrograms" />
+      <ClassSettings v-show="$store.state.consoleShow.classSettings" />
+      <ProjectSettings v-show="$store.state.consoleShow.projectSettings" />
     </v-container>
 
   </div>
@@ -91,22 +92,17 @@
 <script>
 import MicroPrograms from '@/views/console/list/MicroPrograms'
 import PersonalSettings from '@/views/console/list/PersonalSettings'
-import PermissionSettings from '@/views/console/list/PermissionSettings'
+import ClassSettings from '@/views/console/list/ClassSettings'
+import ProjectSettings from '@/views/console/list/ProjectSettings'
 export default {
   name: 'Dashboard',
-  components: { PermissionSettings, PersonalSettings, MicroPrograms },
+  components: { ProjectSettings, ClassSettings, PersonalSettings, MicroPrograms },
   data: () => {
     return {
-      Show: {
-        homePage: true,
-        microPrograms: false,
-        personalSettings: false,
-        permissionSettings: false
-      },
       List: {
-        microPrograms: false,
+        microPrograms: true,
         personalSettings: true,
-        permissionSettings: false
+        classSettings: true
       },
       User: {
         avatar: '',
@@ -134,9 +130,8 @@ export default {
     /**
      * 权限判断
      */
-    if (this.User.permission === ('admin' || 'teacher' || 'monitor')) {
-      this.List.microPrograms = true
-      this.List.permissionSettings = true
+    if (this.User.permission === ('student' || 'tourist')) {
+      this.List.microPrograms = false
     }
     console.log('%c' + '[Console] 控制台渲染完成', 'color:' + 'green')
   }

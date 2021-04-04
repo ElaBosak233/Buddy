@@ -101,9 +101,6 @@ export default {
   data: () => ({
     items: [
       {
-        src: 'https://i.loli.net/2021/01/01/k7JoAO1M8XUT6aV.png'
-      },
-      {
         src: 'https://i.loli.net/2021/01/01/AycGBmqjKXQ1Es6.png'
       },
       {
@@ -177,6 +174,7 @@ export default {
               schema.initUser(theSelf) // 用户
               schema.initCurriculum(theSelf) // 课程表
               schema.initToast(theSelf) // 通知
+              schema.initProject(theSelf) // 作业
             } catch (e) {
               console.log('%c' + '[LeanCloud]数据结构初始化失败 ' + e, 'color:' + 'red')
             }

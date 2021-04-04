@@ -24,6 +24,13 @@ export default new Vuex.Store({
       email: '',
       qq: '',
       permission: ''
+    },
+    consoleShow: {
+      homePage: true,
+      microPrograms: false,
+      personalSettings: false,
+      classSettings: false,
+      projectSettings: false
     }
   },
   getters: {

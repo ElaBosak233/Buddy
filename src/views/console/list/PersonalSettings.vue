@@ -211,82 +211,82 @@
       </v-form>
     </v-card>
     <br/>
-    <v-row>
-      <v-col cols="12" md="6">
-        <!-- 删除账号 -->
-        <v-card outlined shaped dark color="red" elevation="2">
-          <v-card-title><v-icon left>fas fa-times</v-icon>删除账号</v-card-title>
-          <v-card-subtitle v-show="deleteUser.disable">管理员账号无法删除</v-card-subtitle>
-          <v-card-text>
-            <v-btn block color="red darken-4" @click="deleteUser.confirm = true" :disabled="deleteUser.disable">
-              账号将被永久删除，请谨慎考虑！（真的很久！！）
-            </v-btn>
-          </v-card-text>
-        </v-card>
-        <v-dialog
-          v-model="deleteUser.confirm"
-          width="500"
-        >
-          <v-card>
-            <v-card-title class="headline grey lighten-2">
-              最后确认一遍
-            </v-card-title>
-            <v-card-text>
-              <br/>
-              你真的要删除这个账号吗？
-            </v-card-text>
-            <v-divider></v-divider>
-            <v-card-actions>
-              <v-spacer></v-spacer>
-              <v-btn
-                color="red"
-                text
-                @click="deleteUserGo"
-              >
-                确定删除
-              </v-btn>
-            </v-card-actions>
-          </v-card>
-        </v-dialog>
-      </v-col>
-      <v-col cols="12" md="6">
-        <!-- 迁移账号 -->
-        <v-card outlined shaped dark color="orange" elevation="2">
-          <v-card-title><v-icon left>fas fa-user-graduate</v-icon>迁移至 “学生”</v-card-title>
-          <v-card-subtitle v-show="migrateUser.disable">已设置为 <code>admin</code>，<code>monitor</code>，<code>teacher</code> 和 <code>student</code> 的用户无法迁移</v-card-subtitle>
-          <v-card-text>
-            <v-btn block color="orange darken-4" @click="migrateUser.confirm = true" :disabled="migrateUser.disable">
-              账号将被永久迁移至 “学生” 权限组，请谨慎考虑！
-            </v-btn>
-          </v-card-text>
-        </v-card>
-        <v-dialog
-          v-model="migrateUser.confirm"
-          width="500"
-        >
-          <v-card>
-            <v-card-title class="headline grey lighten-2">
-              最后确认一遍
-            </v-card-title>
-            <v-card-text>
-              <br/>
-              你真的要迁移这个账号吗？
-            </v-card-text>
-            <v-divider></v-divider>
-            <v-card-actions>
-              <v-spacer></v-spacer>
-              <v-btn
-                color="red"
-                text
-                @click="migrateUserGo"
-              >
-                确定迁移
-              </v-btn>
-            </v-card-actions>
-          </v-card>
-        </v-dialog>
-      </v-col>
-    </v-row>
+<!--    <v-row>-->
+<!--      <v-col cols="12" md="6">-->
+<!--        &lt;!&ndash; 删除账号 &ndash;&gt;-->
+<!--        <v-card outlined shaped dark color="red" elevation="2">-->
+<!--          <v-card-title><v-icon left>fas fa-times</v-icon>删除账号</v-card-title>-->
+<!--          <v-card-subtitle v-show="deleteUser.disable">管理员账号无法删除</v-card-subtitle>-->
+<!--          <v-card-text>-->
+<!--            <v-btn block color="red darken-4" @click="deleteUser.confirm = true" :disabled="deleteUser.disable">-->
+<!--              账号将被永久删除，请谨慎考虑！（真的很久！！）-->
+<!--            </v-btn>-->
+<!--          </v-card-text>-->
+<!--        </v-card>-->
+<!--        <v-dialog-->
+<!--          v-model="deleteUser.confirm"-->
+<!--          width="500"-->
+<!--        >-->
+<!--          <v-card>-->
+<!--            <v-card-title class="headline grey lighten-2">-->
+<!--              最后确认一遍-->
+<!--            </v-card-title>-->
+<!--            <v-card-text>-->
+<!--              <br/>-->
+<!--              你真的要删除这个账号吗？-->
+<!--            </v-card-text>-->
+<!--            <v-divider></v-divider>-->
+<!--            <v-card-actions>-->
+<!--              <v-spacer></v-spacer>-->
+<!--              <v-btn-->
+<!--                color="red"-->
+<!--                text-->
+<!--                @click="deleteUserGo"-->
+<!--              >-->
+<!--                确定删除-->
+<!--              </v-btn>-->
+<!--            </v-card-actions>-->
+<!--          </v-card>-->
+<!--        </v-dialog>-->
+<!--      </v-col>-->
+<!--      <v-col cols="12" md="6">-->
+<!--        &lt;!&ndash; 迁移账号 &ndash;&gt;-->
+<!--        <v-card outlined shaped dark color="orange" elevation="2">-->
+<!--          <v-card-title><v-icon left>fas fa-user-graduate</v-icon>迁移至 “学生”</v-card-title>-->
+<!--          <v-card-subtitle v-show="migrateUser.disable">已设置为 <code>admin</code>，<code>monitor</code>，<code>teacher</code> 和 <code>student</code> 的用户无法迁移</v-card-subtitle>-->
+<!--          <v-card-text>-->
+<!--            <v-btn block color="orange darken-4" @click="migrateUser.confirm = true" :disabled="migrateUser.disable">-->
+<!--              账号将被永久迁移至 “学生” 权限组，请谨慎考虑！-->
+<!--            </v-btn>-->
+<!--          </v-card-text>-->
+<!--        </v-card>-->
+<!--        <v-dialog-->
+<!--          v-model="migrateUser.confirm"-->
+<!--          width="500"-->
+<!--        >-->
+<!--          <v-card>-->
+<!--            <v-card-title class="headline grey lighten-2">-->
+<!--              最后确认一遍-->
+<!--            </v-card-title>-->
+<!--            <v-card-text>-->
+<!--              <br/>-->
+<!--              你真的要迁移这个账号吗？-->
+<!--            </v-card-text>-->
+<!--            <v-divider></v-divider>-->
+<!--            <v-card-actions>-->
+<!--              <v-spacer></v-spacer>-->
+<!--              <v-btn-->
+<!--                color="red"-->
+<!--                text-->
+<!--                @click="migrateUserGo"-->
+<!--              >-->
+<!--                确定迁移-->
+<!--              </v-btn>-->
+<!--            </v-card-actions>-->
+<!--          </v-card>-->
+<!--        </v-dialog>-->
+<!--      </v-col>-->
+<!--    </v-row>-->
   </v-container>
 </template>
 
@@ -335,7 +335,7 @@ export default {
   methods: {
     updateUser: function () {
       const AV = this.$store.state.AV
-      AV.User.current().set('qq', this.qq)
+      AV.User.current().set('qq', parseInt(this.qq))
       AV.User.current().set('avatar', 'http://q1.qlogo.cn/g?b=qq&nk=' + this.qq + '&s=640')
       AV.User.current().set('nick', this.nick)
       AV.User.current().set('real', this.real)
@@ -387,7 +387,7 @@ export default {
     if (this.permission === 'admin') {
       this.deleteUser.disable = true
     }
-    if (this.permission === ('admin' || 'monitor' || 'teacher' || 'student')) {
+    if (this.permission !== 'tourist') {
       this.migrateUser.disable = true
     }
   }

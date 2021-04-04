@@ -19,7 +19,7 @@
           elevation="2"
         >
           <v-card-title><v-icon left>fas fa-walking</v-icon>登录 Buddy 以使用更多功能</v-card-title>
-          <v-card-subtitle>没有 Buddy 账号？在此 <strong><a @click="goRegister">注册</a></strong></v-card-subtitle>
+          <v-card-subtitle>没有 Buddy 账号？请联系本 Buddy 的管理员注册账号！</v-card-subtitle>
           <v-card-text>
             <div class="form-group">
               <label for="username">用户名</label>

@@ -30,7 +30,7 @@
                 </v-avatar>
               </v-col>
             </v-row>
-            <p>{{ info.nick }}</p>
+<!--            <p>{{ info.nick }}</p>-->
           </v-card-text>
           <v-card-actions>
             <v-btn
@@ -60,13 +60,7 @@ export default {
     refresh_rate: 1,
     times: 0, // 计次
     timer: '', // 循环
-    array: {
-      id: [],
-      name: [],
-      nick: [],
-      qq: [],
-      avatar: []
-    },
+    array: [],
     stats: {
       id: 0,
       text: '点我开始',
@@ -84,7 +78,7 @@ export default {
   }),
   methods: {
     go: function () {
-      const i = Math.floor((Math.random() * this.length))
+      let i = Math.floor((Math.random() * this.length))
       if (this.stats.id === 0) {
         this.stats.id = 1
         this.stats.text = '点我结束'
@@ -94,10 +88,11 @@ export default {
           // 初始化，删除彩蛋和描述内容
           this.info.egg = null
           // 覆盖 id、name、real
-          this.info.id = this.array.id[i]
-          this.info.name = this.array.name[i]
-          this.info.nick = this.array.nick[i]
-          this.info.avatar = this.array.avatar[i]
+          this.info.id = this.array[i].id
+          this.info.name = this.array[i].name
+          this.info.nick = this.array[i].nick
+          this.info.avatar = this.array[i].avatar
+          i = Math.floor((Math.random() * this.length))
         }, this.refresh_rate)
       } else {
         this.stats.id = 0
@@ -107,7 +102,7 @@ export default {
       }
     }
   },
-  created () {
+  mounted () {
     const AV = this.$store.state.AV
     if (AV.applicationId == null || AV.applicationKey == null) {
       this.failed = true
@@ -119,15 +114,18 @@ export default {
       students.find().then((array) => {
         this.length = array.length
         array.forEach((todo) => {
-          this.array.id.push(todo.get('id'))
-          this.array.name.push(todo.get('real'))
-          this.array.nick.push(todo.get('nick'))
-          this.array.qq.push(todo.get('qq'))
-          this.array.avatar.push(todo.get('avatar'))
+          const data = {
+            id: todo.get('id'),
+            name: todo.get('real'),
+            nick: todo.get('nick'),
+            qq: todo.get('qq'),
+            avatar: todo.get('avatar')
+          }
+          this.array.push(data)
         })
         for (let i = 0; i < self.length; i++) {
           const image = new Image()
-          image.src = this.array.avatar[i]
+          image.src = this.array[i].avatar
           // eslint-disable-next-line no-unused-expressions
           image.onload
         }

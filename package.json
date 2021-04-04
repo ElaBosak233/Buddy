@@ -11,7 +11,10 @@
     "core-js": "^3.6.5",
     "leancloud-storage": "^4.10.1",
     "push.js": "^1.0.12",
+    "vconsole": "^3.4.0",
     "vue": "^2.6.11",
+    "vue-qr": "^2.3.0",
+    "vue-qrcode-reader": "^2.3.18",
     "vue-router": "^3.2.0",
     "vuetify": "^2.2.11",
     "vuex": "^3.4.0"
