@@ -51,8 +51,9 @@
               text
               @click="deleteProject"
               v-show="showBtn"
+              color="red"
             >
-              <v-icon left>fas fa-trash-alt</v-icon>删除
+              <v-icon left>fas fa-trash-alt</v-icon><div style="font-weight: bold">删除</div>
             </v-btn>
             <v-btn
               dark
@@ -141,7 +142,6 @@
       v-model="newP"
       transition="dialog-bottom-transition"
       max-width="600"
-      persistent
     >
       <v-card>
         <v-toolbar
@@ -157,7 +157,7 @@
               text
               @click="newP = false"
             >
-              <v-icon left>fas fa-trash-alt</v-icon>取消
+              <v-icon left>fas fa-times</v-icon>取消
             </v-btn>
             <v-btn
               dark
@@ -389,16 +389,20 @@ export default {
       const AV = this.$store.state.AV;
       const student = new AV.Query("_User");
       student.equalTo("permission", "student");
+      let response = [];
       student.find().then((res) => {
-        this.editedProject.info.totalMember = res.length;
+        response = res;
+        this.editedProject.info.totalMember = response.length;
         const array = [];
         const array2 = this.editedProject.finished;
-        res.forEach((i) => {
+        response.forEach((i) => {
           array.push(i.getObjectId());
         });
         this.subArray(array, array2).forEach((stuId) => {
-          student.get(stuId).then((name) => {
-            this.editedProject.info.unFinished.push(name.get("real"));
+          response.forEach((i) => {
+            if (i.getObjectId() === stuId) {
+              this.editedProject.info.unFinished.push(i.get("real"));
+            }
           });
         });
       });
@@ -411,16 +415,13 @@ export default {
       save.set("content", this.editedProject.content);
       save.save();
       this.info = false;
-      this.reload();
+      this.reload(500);
     },
     deleteProject () {
       const AV = this.$store.state.AV;
       const del = AV.Object.createWithoutData("Project", this.editedProject.objectId);
       del.destroy();
-      const theSelf = this;
-      setTimeout(function () {
-        theSelf.reload();
-      }, 500);
+      this.reload(500);
     },
     newProject (param) {
       this.editedProject = this.defaultProject;
@@ -435,7 +436,7 @@ export default {
       newPro.set("subject", this.editedProject.subject.toLowerCase());
       newPro.set("finished", []);
       newPro.save();
-      this.reload();
+      this.reload(500);
     },
     subArray (arr1, arr2) {
       for (let i = arr1.length - 1; i >= 0; i--) {

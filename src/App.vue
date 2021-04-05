@@ -49,10 +49,13 @@ export default {
     }
   },
   methods: {
-    async reload () {
-      this.isRouterShow = false;
-      await this.$nextTick();
-      this.isRouterShow = true;
+    async reload (time) {
+      const theSelf = this;
+      setTimeout(async function () {
+        theSelf.isRouterShow = false;
+        await theSelf.$nextTick();
+        theSelf.isRouterShow = true;
+      }, parseFloat(time));
     }
   }
 };
