@@ -36,19 +36,19 @@
 
 <script>
 export default {
-  name: 'Agreement',
+  name: "Agreement",
   data: function () {
     return {
       dialog: false
-    }
+    };
   },
   created () {
     if (localStorage.appFirstLoaded === false || localStorage.appFirstLoaded == null) {
-      console.log('已弹出')
-      this.dialog = true
+      console.log("已弹出");
+      this.dialog = true;
     }
   }
-}
+};
 </script>
 
 <style scoped>

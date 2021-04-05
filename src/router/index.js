@@ -1,105 +1,105 @@
-import Vue from 'vue'
-import VueRouter from 'vue-router'
+import Vue from "vue";
+import VueRouter from "vue-router";
 
-import store from '../store'
+import store from "../store";
 
-Vue.use(VueRouter)
+Vue.use(VueRouter);
 
-const originalPush = VueRouter.prototype.push
+const originalPush = VueRouter.prototype.push;
 
 VueRouter.prototype.push = function push (location) {
-  return originalPush.call(this, location).catch(err => err)
-}
+  return originalPush.call(this, location).catch(err => err);
+};
 
 const routes = [
   {
-    path: '/',
-    name: 'Home',
-    component: () => import('../views/Home.vue'),
+    path: "/",
+    name: "Home",
+    component: () => import("../views/Home.vue"),
     meta: {
-      title: '巴蒂'
+      title: "巴蒂"
     }
   },
   {
-    path: '/about',
-    name: 'About',
-    component: () => import('../views/About.vue'),
+    path: "/about",
+    name: "About",
+    component: () => import("../views/About.vue"),
     meta: {
-      title: '关于'
+      title: "关于"
     }
   },
   {
-    path: '/Toast',
-    name: 'Toast',
-    component: () => import('../views/function/ToastBoard.vue'),
+    path: "/Toast",
+    name: "Toast",
+    component: () => import("../views/function/ToastBoard.vue"),
     meta: {
-      title: '公告板'
+      title: "公告板"
     }
   },
   {
-    path: '/RandomRollCall',
-    name: 'RandomRollCall',
-    component: () => import('../views/function/RandomRollCall.vue'),
+    path: "/RandomRollCall",
+    name: "RandomRollCall",
+    component: () => import("../views/function/RandomRollCall.vue"),
     meta: {
-      title: '随机点名'
+      title: "随机点名"
     }
   },
   {
-    path: '/Curriculum',
-    name: 'Curriculum',
-    component: () => import('../views/function/Curriculum.vue'),
+    path: "/Curriculum",
+    name: "Curriculum",
+    component: () => import("../views/function/Curriculum.vue"),
     meta: {
-      title: '课程表'
+      title: "课程表"
     }
   },
   {
-    path: '/login',
-    name: 'Login',
-    component: () => import('../views/console/Login.vue'),
+    path: "/login",
+    name: "Login",
+    component: () => import("../views/console/Login.vue"),
     meta: {
-      title: '登录'
+      title: "登录"
     }
   },
   {
-    path: '/register',
-    name: 'Register',
-    component: () => import('../views/console/Register.vue'),
+    path: "/register",
+    name: "Register",
+    component: () => import("../views/console/Register.vue"),
     meta: {
-      title: '注册'
+      title: "注册"
     }
   },
   {
-    path: '/console',
-    name: 'Console',
-    component: () => import('../views/console/Console.vue'),
+    path: "/console",
+    name: "Console",
+    component: () => import("../views/console/Console.vue"),
     meta: {
-      title: '控制台',
+      title: "控制台",
       requireAuth: true
     }
   }
-]
+];
 
 const router = new VueRouter({
-  mode: 'history',
+  mode: "history",
   base: process.env.BASE_URL,
   routes
-})
+});
 
 router.beforeEach((to, from, next) => {
   if (to.matched.some(m => m.meta.requireAuth)) {
     // 对路由进行验证
     if (store.state.userInfo.logined === true) { // 已经登陆
-      next()
+      next();
     } else {
-      next({ path: '/login' })
+      next({ path: "/login" });
     }
   } else {
-    next()
+    next();
   }
   /* 路由发生变化修改页面title */
   if (to.meta.title) {
-    document.title = to.meta.title + ' - Buddy'
+    document.title = to.meta.title + " - Buddy";
   }
-})
+});
 
-export default router
+export default router;

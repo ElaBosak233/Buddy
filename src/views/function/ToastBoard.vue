@@ -45,38 +45,38 @@
 
 <script>
 export default {
-  name: 'ToastBoard',
+  name: "ToastBoard",
   data: function () {
     return {
       ToastData: [],
       failed: false
-    }
+    };
   },
   created () {
-    const AV = this.$store.state.AV
+    const AV = this.$store.state.AV;
     if (AV.applicationId == null || AV.applicationKey == null) {
-      this.failed = true
-      console.log('%c' + '[ToastBoard] 公告板渲染异常，请确认是否初始化 LeanCloud，以及数据结构是否正确', 'color:' + 'red')
+      this.failed = true;
+      console.log("%c" + "[ToastBoard] 公告板渲染异常，请确认是否初始化 LeanCloud，以及数据结构是否正确", "color:" + "red");
     } else {
-      this.failed = false
-      const toastQuery = new AV.Query('Toast')
-      toastQuery.descending('updatedAt')
-      const ToastData = this.ToastData
+      this.failed = false;
+      const toastQuery = new AV.Query("Toast");
+      toastQuery.descending("updatedAt");
+      const ToastData = this.ToastData;
       toastQuery.find().then(function (res) {
         for (let i = 0; i < res.length; i++) {
           ToastData.push({
-            type: res[i].get('type'),
-            title: res[i].get('title'),
-            content: res[i].get('content'),
-            messenger: res[i].get('messenger'),
-            messenger_avatar: res[i].get('messenger_avatar'),
-            time: res[i].get('updatedAt')
-          })
+            type: res[i].get("type"),
+            title: res[i].get("title"),
+            content: res[i].get("content"),
+            messenger: res[i].get("messenger"),
+            messenger_avatar: res[i].get("messenger_avatar"),
+            time: res[i].get("updatedAt")
+          });
         }
-      })
+      });
     }
   }
-}
+};
 </script>
 
 <style scoped>

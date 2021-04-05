@@ -56,61 +56,61 @@
 
 <script>
 export default {
-  name: 'Login',
+  name: "Login",
   data: () => {
     return {
-      username: '',
-      password: '',
+      username: "",
+      password: "",
       // saveUsername: false,
       // autoLogin: false,
       fail: false,
       failed: false
-    }
+    };
   },
   methods: {
     goRegister: function () {
-      this.$router.push({ path: '/register' })
-      document.title = '注册 - Buddy'
-      this.$store.state.NavbarTitle = '注册'
+      this.$router.push({ path: "/register" });
+      document.title = "注册 - Buddy";
+      this.$store.state.NavbarTitle = "注册";
     },
     login: function () {
-      const AV = this.$store.state.AV
+      const AV = this.$store.state.AV;
       try {
         AV.User.logIn(this.username, this.password).then((user) => {
           // 登陆成功
-          this.$store.state.userInfo.username = this.username
-          const userQuery = new AV.Query('_User')
+          this.$store.state.userInfo.username = this.username;
+          const userQuery = new AV.Query("_User");
           userQuery.get(user.getObjectId()).then((res) => {
-            localStorage.sessionToken = AV.User.current().getSessionToken()
-            this.fail = false
-            this.$store.state.userInfo.nick = res.get('nick')
-            this.$store.state.userInfo.qq = res.get('qq')
-            this.$store.state.userInfo.email = res.getEmail()
-            this.$store.state.userInfo.permission = res.get('permission')
-            this.$store.state.userInfo.objectId = user.getObjectId()
-            this.$store.state.userInfo.logined = true
-            this.$router.push({ path: '/console' })
-            this.$store.state.NavbarTitle = '控制台'
-          })
+            localStorage.sessionToken = AV.User.current().getSessionToken();
+            this.fail = false;
+            this.$store.state.userInfo.nick = res.get("nick");
+            this.$store.state.userInfo.qq = res.get("qq");
+            this.$store.state.userInfo.email = res.getEmail();
+            this.$store.state.userInfo.permission = res.get("permission");
+            this.$store.state.userInfo.objectId = user.getObjectId();
+            this.$store.state.userInfo.logined = true;
+            this.$router.push({ path: "/console" });
+            this.$store.state.NavbarTitle = "控制台";
+          });
           // eslint-disable-next-line handle-callback-err
         }, (error) => {
-          this.fail = true
-        })
+          this.fail = true;
+        });
       } catch (error) {
-        this.fail = true
+        this.fail = true;
       }
     }
   },
   created () {
-    document.title = '登录 - Buddy'
-    this.$store.state.NavbarTitle = '登录'
-    const AV = this.$store.state.AV
+    document.title = "登录 - Buddy";
+    this.$store.state.NavbarTitle = "登录";
+    const AV = this.$store.state.AV;
     if (AV.applicationId == null || AV.applicationKey == null) {
-      this.failed = true
-      console.log('%c' + '[Login] 登陆界面渲染异常，请确认是否初始化 LeanCloud，以及数据结构是否正确', 'color:' + 'red')
+      this.failed = true;
+      console.log("%c" + "[Login] 登陆界面渲染异常，请确认是否初始化 LeanCloud，以及数据结构是否正确", "color:" + "red");
     }
   }
-}
+};
 </script>
 
 <style scoped>

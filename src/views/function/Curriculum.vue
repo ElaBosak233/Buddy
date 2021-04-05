@@ -70,90 +70,90 @@
 
 <script>
 export default {
-  name: 'Curriculum',
+  name: "Curriculum",
   data: function () {
     return {
       items: [
         {
-          index: '星期一',
+          index: "星期一",
           class: []
         },
         {
-          index: '星期二',
+          index: "星期二",
           class: []
         },
         {
-          index: '星期三',
+          index: "星期三",
           class: []
         },
         {
-          index: '星期四',
+          index: "星期四",
           class: []
         },
         {
-          index: '星期五',
+          index: "星期五",
           class: []
         }
       ],
       failed: false
-    }
+    };
   },
   created () {
-    const AV = this.$store.state.AV
+    const AV = this.$store.state.AV;
     if (AV.applicationId == null || AV.applicationKey == null) {
-      this.failed = true
-      console.log('%c' + '[Curriculum] 课程表渲染异常，请确认是否初始化 LeanCloud，以及数据结构是否正确', 'color:' + 'red')
+      this.failed = true;
+      console.log("%c" + "[Curriculum] 课程表渲染异常，请确认是否初始化 LeanCloud，以及数据结构是否正确", "color:" + "red");
     } else {
       /**
        * 获取/创建星期一的课程表
        */
-      const monday = new AV.Query('Curriculum')
-      monday.equalTo('week', '星期一')
+      const monday = new AV.Query("Curriculum");
+      monday.equalTo("week", "星期一");
       monday.first().then((todo) => {
-        this.items[0].class = todo.get('class')
-      })
+        this.items[0].class = todo.get("class");
+      });
 
       /**
        * 获取/创建星期二的课程表
        */
-      const tuesday = new AV.Query('Curriculum')
-      tuesday.equalTo('week', '星期二')
+      const tuesday = new AV.Query("Curriculum");
+      tuesday.equalTo("week", "星期二");
       tuesday.first().then((todo) => {
-        this.items[1].class = todo.get('class')
-      })
+        this.items[1].class = todo.get("class");
+      });
 
       /**
        * 获取/创建星期三的课程表
        */
-      const wednesday = new AV.Query('Curriculum')
-      wednesday.equalTo('week', '星期三')
+      const wednesday = new AV.Query("Curriculum");
+      wednesday.equalTo("week", "星期三");
       wednesday.first().then((todo) => {
-        this.items[2].class = todo.get('class')
-      })
+        this.items[2].class = todo.get("class");
+      });
 
       /**
        * 获取/创建星期四的课程表
        */
-      const thursday = new AV.Query('Curriculum')
-      thursday.equalTo('week', '星期四')
+      const thursday = new AV.Query("Curriculum");
+      thursday.equalTo("week", "星期四");
       thursday.first().then((todo) => {
-        this.items[3].class = todo.get('class')
-      })
+        this.items[3].class = todo.get("class");
+      });
 
       /**
        * 获取/创建星期五的课程表
        */
-      const friday = new AV.Query('Curriculum')
-      friday.equalTo('week', '星期五')
+      const friday = new AV.Query("Curriculum");
+      friday.equalTo("week", "星期五");
       friday.first().then((todo) => {
-        this.items[4].class = todo.get('class')
-      })
+        this.items[4].class = todo.get("class");
+      });
 
-      this.failed = false
-      console.log('%c' + '[Curriculum] 课程表渲染完成', 'color:' + 'green')
+      this.failed = false;
+      console.log("%c" + "[Curriculum] 课程表渲染完成", "color:" + "green");
     }
   }
-}
+};
 </script>
 
 <style scoped>

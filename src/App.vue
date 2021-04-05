@@ -11,17 +11,17 @@
 </template>
 
 <script>
-import Navbar from '@/components/Navbar'
-import Footer from '@/components/Footer'
-import Agreement from '@/components/Agreement'
-import Toast from '@/components/Toast'
-import Push from 'push.js'
-import VConsole from 'vconsole'
+import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
+import Agreement from "@/components/Agreement";
+import Toast from "@/components/Toast";
+import Push from "push.js";
+import VConsole from "vconsole";
 // eslint-disable-next-line no-unused-vars
-const vConsole = new VConsole()
+const vConsole = new VConsole();
 
 export default {
-  name: 'App',
+  name: "App",
   components: {
     Agreement,
     Footer,
@@ -31,7 +31,7 @@ export default {
   provide () {
     return {
       reload: this.reload
-    }
+    };
   },
   data: () => ({
     isRouterShow: true
@@ -40,22 +40,22 @@ export default {
     /**
      * 请求 Push.js 的权限
      */
-    Push.Permission.request()
+    Push.Permission.request();
     /**
      * 刷新回转主页
      */
-    if (this.$router.path !== '/') {
-      this.$router.replace('/')
+    if (this.$router.path !== "/") {
+      this.$router.replace("/");
     }
   },
   methods: {
     async reload () {
-      this.isRouterShow = false
-      await this.$nextTick()
-      this.isRouterShow = true
+      this.isRouterShow = false;
+      await this.$nextTick();
+      this.isRouterShow = true;
     }
   }
-}
+};
 </script>
 
 <style scoped>

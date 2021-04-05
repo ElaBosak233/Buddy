@@ -326,7 +326,7 @@
 
 <script>
 export default {
-  name: 'MicroPrograms',
+  name: "MicroPrograms",
   data: () => {
     return {
       Toast: {
@@ -335,9 +335,9 @@ export default {
         fail: false,
         clear: false,
         msg: {
-          title: '',
-          content: '',
-          type: ''
+          title: "",
+          content: "",
+          type: ""
         }
       },
       Curriculum: {
@@ -346,146 +346,146 @@ export default {
         fail: false,
         items: [
           {
-            index: '星期一',
-            objectId: '',
+            index: "星期一",
+            objectId: "",
             class: []
           },
           {
-            index: '星期二',
-            objectId: '',
+            index: "星期二",
+            objectId: "",
             class: []
           },
           {
-            index: '星期三',
-            objectId: '',
+            index: "星期三",
+            objectId: "",
             class: []
           },
           {
-            index: '星期四',
-            objectId: '',
+            index: "星期四",
+            objectId: "",
             class: []
           },
           {
-            index: '星期五',
-            objectId: '',
+            index: "星期五",
+            objectId: "",
             class: []
           }
         ]
       }
-    }
+    };
   },
   methods: {
     sendToast: function () {
-      const AV = this.$store.state.AV
+      const AV = this.$store.state.AV;
       try {
-        const newToast = new AV.Object('Toast')
-        if (this.Toast.msg.title === '') {
-          newToast.set('title', '无标题')
+        const newToast = new AV.Object("Toast");
+        if (this.Toast.msg.title === "") {
+          newToast.set("title", "无标题");
         } else {
-          newToast.set('title', this.Toast.msg.title)
+          newToast.set("title", this.Toast.msg.title);
         }
-        newToast.set('content', this.Toast.msg.content)
-        if (this.Toast.msg.type === '') {
-          newToast.set('type', 'blue')
+        newToast.set("content", this.Toast.msg.content);
+        if (this.Toast.msg.type === "") {
+          newToast.set("type", "blue");
         } else {
-          newToast.set('type', this.Toast.msg.type)
+          newToast.set("type", this.Toast.msg.type);
         }
-        newToast.set('messenger', AV.User.current().get('nick'))
-        newToast.set('messenger_avatar', AV.User.current().get('avatar'))
-        newToast.save().then()
-        this.Toast.fail = false
-        this.Toast.success = true
+        newToast.set("messenger", AV.User.current().get("nick"));
+        newToast.set("messenger_avatar", AV.User.current().get("avatar"));
+        newToast.save().then();
+        this.Toast.fail = false;
+        this.Toast.success = true;
       } catch (e) {
-        this.Toast.fail = true
+        this.Toast.fail = true;
       } finally {
-        this.Toast.toastSendForm = false
+        this.Toast.toastSendForm = false;
       }
     },
     clearToast: function () {
-      const AV = this.$store.state.AV
-      const query = new AV.Query('Toast')
+      const AV = this.$store.state.AV;
+      const query = new AV.Query("Toast");
       query.find().then((todo) => {
-        AV.Object.destroyAll(todo)
-        this.Toast.clear = true
-      })
+        AV.Object.destroyAll(todo);
+        this.Toast.clear = true;
+      });
     },
     getCurriculum: function () {
-      const AV = this.$store.state.AV
+      const AV = this.$store.state.AV;
       /**
        * 获取/创建星期一的课程表
        */
-      const monday = new AV.Query('Curriculum')
-      monday.equalTo('week', '星期一')
+      const monday = new AV.Query("Curriculum");
+      monday.equalTo("week", "星期一");
       monday.first().then((todo) => {
-        this.Curriculum.items[0].objectId = todo.getObjectId()
-        this.Curriculum.items[0].class = todo.get('class')
-      })
+        this.Curriculum.items[0].objectId = todo.getObjectId();
+        this.Curriculum.items[0].class = todo.get("class");
+      });
       /**
        * 获取/创建星期二的课程表
        */
-      const tuesday = new AV.Query('Curriculum')
-      tuesday.equalTo('week', '星期二')
+      const tuesday = new AV.Query("Curriculum");
+      tuesday.equalTo("week", "星期二");
       tuesday.first().then((todo) => {
-        this.Curriculum.items[1].objectId = todo.getObjectId()
-        this.Curriculum.items[1].class = todo.get('class')
-      })
+        this.Curriculum.items[1].objectId = todo.getObjectId();
+        this.Curriculum.items[1].class = todo.get("class");
+      });
       /**
        * 获取/创建星期三的课程表
        */
-      const wednesday = new AV.Query('Curriculum')
-      wednesday.equalTo('week', '星期三')
+      const wednesday = new AV.Query("Curriculum");
+      wednesday.equalTo("week", "星期三");
       wednesday.first().then((todo) => {
-        this.Curriculum.items[2].objectId = todo.getObjectId()
-        this.Curriculum.items[2].class = todo.get('class')
-      })
+        this.Curriculum.items[2].objectId = todo.getObjectId();
+        this.Curriculum.items[2].class = todo.get("class");
+      });
       /**
        * 获取/创建星期四的课程表
        */
-      const thursday = new AV.Query('Curriculum')
-      thursday.equalTo('week', '星期四')
+      const thursday = new AV.Query("Curriculum");
+      thursday.equalTo("week", "星期四");
       thursday.first().then((todo) => {
-        this.Curriculum.items[3].objectId = todo.getObjectId()
-        this.Curriculum.items[3].class = todo.get('class')
-      })
+        this.Curriculum.items[3].objectId = todo.getObjectId();
+        this.Curriculum.items[3].class = todo.get("class");
+      });
       /**
        * 获取/创建星期五的课程表
        */
-      const friday = new AV.Query('Curriculum')
-      friday.equalTo('week', '星期五')
+      const friday = new AV.Query("Curriculum");
+      friday.equalTo("week", "星期五");
       friday.first().then((todo) => {
-        this.Curriculum.items[4].objectId = todo.getObjectId()
-        this.Curriculum.items[4].class = todo.get('class')
-      })
-      this.Curriculum.curriculumSendForm = true
+        this.Curriculum.items[4].objectId = todo.getObjectId();
+        this.Curriculum.items[4].class = todo.get("class");
+      });
+      this.Curriculum.curriculumSendForm = true;
     },
     sendCurriculum: function () {
-      const AV = this.$store.state.AV
+      const AV = this.$store.state.AV;
       try {
-        const monday = AV.Object.createWithoutData('Curriculum', this.Curriculum.items[0].objectId)
-        monday.set('class', this.Curriculum.items[0].class)
-        monday.save().then()
-        const tuesday = AV.Object.createWithoutData('Curriculum', this.Curriculum.items[1].objectId)
-        tuesday.set('class', this.Curriculum.items[1].class)
-        tuesday.save().then()
-        const wednesday = AV.Object.createWithoutData('Curriculum', this.Curriculum.items[2].objectId)
-        wednesday.set('class', this.Curriculum.items[2].class)
-        wednesday.save().then()
-        const thursday = AV.Object.createWithoutData('Curriculum', this.Curriculum.items[3].objectId)
-        thursday.set('class', this.Curriculum.items[3].class)
-        thursday.save().then()
-        const friday = AV.Object.createWithoutData('Curriculum', this.Curriculum.items[4].objectId)
-        friday.set('class', this.Curriculum.items[4].class)
-        friday.save().then()
-        this.Curriculum.fail = false
-        this.Curriculum.success = true
+        const monday = AV.Object.createWithoutData("Curriculum", this.Curriculum.items[0].objectId);
+        monday.set("class", this.Curriculum.items[0].class);
+        monday.save().then();
+        const tuesday = AV.Object.createWithoutData("Curriculum", this.Curriculum.items[1].objectId);
+        tuesday.set("class", this.Curriculum.items[1].class);
+        tuesday.save().then();
+        const wednesday = AV.Object.createWithoutData("Curriculum", this.Curriculum.items[2].objectId);
+        wednesday.set("class", this.Curriculum.items[2].class);
+        wednesday.save().then();
+        const thursday = AV.Object.createWithoutData("Curriculum", this.Curriculum.items[3].objectId);
+        thursday.set("class", this.Curriculum.items[3].class);
+        thursday.save().then();
+        const friday = AV.Object.createWithoutData("Curriculum", this.Curriculum.items[4].objectId);
+        friday.set("class", this.Curriculum.items[4].class);
+        friday.save().then();
+        this.Curriculum.fail = false;
+        this.Curriculum.success = true;
       } catch (e) {
-        this.Curriculum.fail = true
+        this.Curriculum.fail = true;
       } finally {
-        this.Curriculum.curriculumSendForm = false
+        this.Curriculum.curriculumSendForm = false;
       }
     }
   }
-}
+};
 </script>
 
 <style scoped>

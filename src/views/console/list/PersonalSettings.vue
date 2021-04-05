@@ -292,7 +292,7 @@
 
 <script>
 export default {
-  name: 'PersonalSettings',
+  name: "PersonalSettings",
   data: () => ({
     valid: false,
     deleteUser: {
@@ -309,89 +309,89 @@ export default {
       delete: false,
       migrate: false
     },
-    username: '',
-    nick: '',
-    real: '',
-    qq: '',
-    avatar: '',
-    permission: '',
+    username: "",
+    nick: "",
+    real: "",
+    qq: "",
+    avatar: "",
+    permission: "",
     Password: {
-      new: ''
+      new: ""
     },
     qqRules: [
-      v => !!v || '必填',
-      v => v.length <= 10 || 'QQ 号不允许多于 10 位'
+      v => !!v || "必填",
+      v => v.length <= 10 || "QQ 号不允许多于 10 位"
     ],
     nameRules: [
-      v => !!v || '必填',
-      v => v.length <= 10 || '昵称不允许多于 10 个字符'
+      v => !!v || "必填",
+      v => v.length <= 10 || "昵称不允许多于 10 个字符"
     ],
-    email: '',
+    email: "",
     emailRules: [
-      v => !!v || '必填',
-      v => /.+@.+/.test(v) || 'Email 格式不合法'
+      v => !!v || "必填",
+      v => /.+@.+/.test(v) || "Email 格式不合法"
     ]
   }),
   methods: {
     updateUser: function () {
-      const AV = this.$store.state.AV
-      AV.User.current().set('qq', parseInt(this.qq))
-      AV.User.current().set('avatar', 'http://q1.qlogo.cn/g?b=qq&nk=' + this.qq + '&s=640')
-      AV.User.current().set('nick', this.nick)
-      AV.User.current().set('real', this.real)
-      AV.User.current().setEmail(this.email)
-      if (this.Password.new !== '') {
-        AV.User.current().setPassword(this.Password.new)
+      const AV = this.$store.state.AV;
+      AV.User.current().set("qq", parseInt(this.qq));
+      AV.User.current().set("avatar", "http://q1.qlogo.cn/g?b=qq&nk=" + this.qq + "&s=640");
+      AV.User.current().set("nick", this.nick);
+      AV.User.current().set("real", this.real);
+      AV.User.current().setEmail(this.email);
+      if (this.Password.new !== "") {
+        AV.User.current().setPassword(this.Password.new);
       }
       AV.User.current().save().then(() => {
-        this.stats.ok = true
-        if (this.Password.new !== '') {
-          localStorage.removeItem('sessionToken')
-          location.reload()
+        this.stats.ok = true;
+        if (this.Password.new !== "") {
+          localStorage.removeItem("sessionToken");
+          location.reload();
         }
       }, (e) => {
-        this.stats.error = true
-      })
+        this.stats.error = true;
+      });
     },
     deleteUserGo: function () {
-      const AV = this.$store.state.AV
-      const user = AV.User.current()
-      user.destroy()
-      this.deleteUser.confirm = false
-      this.stats.delete = true
-      localStorage.removeItem('sessionToken')
+      const AV = this.$store.state.AV;
+      const user = AV.User.current();
+      user.destroy();
+      this.deleteUser.confirm = false;
+      this.stats.delete = true;
+      localStorage.removeItem("sessionToken");
       setTimeout(function () {
-        location.reload()
-      }, 1000)
+        location.reload();
+      }, 1000);
     },
     migrateUserGo: function () {
-      const AV = this.$store.state.AV
-      AV.User.current().set('permission', 'student')
-      AV.User.current().save().then()
-      this.migrateUser.confirm = false
-      this.stats.migrate = true
+      const AV = this.$store.state.AV;
+      AV.User.current().set("permission", "student");
+      AV.User.current().save().then();
+      this.migrateUser.confirm = false;
+      this.stats.migrate = true;
       setTimeout(function () {
-        location.reload()
-      }, 1000)
+        location.reload();
+      }, 1000);
     }
   },
   mounted () {
-    const AV = this.$store.state.AV
-    this.username = AV.User.current().getUsername()
-    this.nick = AV.User.current().get('nick')
-    this.email = AV.User.current().getEmail()
-    this.qq = AV.User.current().get('qq')
-    this.avatar = AV.User.current().get('avatar')
-    this.permission = AV.User.current().get('permission')
-    this.real = AV.User.current().get('real')
-    if (this.permission === 'admin') {
-      this.deleteUser.disable = true
+    const AV = this.$store.state.AV;
+    this.username = AV.User.current().getUsername();
+    this.nick = AV.User.current().get("nick");
+    this.email = AV.User.current().getEmail();
+    this.qq = AV.User.current().get("qq");
+    this.avatar = AV.User.current().get("avatar");
+    this.permission = AV.User.current().get("permission");
+    this.real = AV.User.current().get("real");
+    if (this.permission === "admin") {
+      this.deleteUser.disable = true;
     }
-    if (this.permission !== 'tourist') {
-      this.migrateUser.disable = true
+    if (this.permission !== "tourist") {
+      this.migrateUser.disable = true;
     }
   }
-}
+};
 </script>
 
 <style scoped>

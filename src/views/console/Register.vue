@@ -62,59 +62,59 @@
 
 <script>
 export default {
-  name: 'Register',
+  name: "Register",
   data: () => {
     return {
       regInfo: {
-        username: '',
-        email: '',
-        nick: '',
-        qq: '',
-        password: ''
+        username: "",
+        email: "",
+        nick: "",
+        qq: "",
+        password: ""
       },
       success: false,
       fail: false,
       failed: false
-    }
+    };
   },
   methods: {
     goLogin: function () {
-      this.$router.push({ path: '/login' })
-      document.title = '登录 - Buddy'
-      this.$store.state.NavbarTitle = '登录'
+      this.$router.push({ path: "/login" });
+      document.title = "登录 - Buddy";
+      this.$store.state.NavbarTitle = "登录";
     },
     register: function () {
-      const AV = this.$store.state.AV
+      const AV = this.$store.state.AV;
       try {
-        const user = new AV.User()
-        user.setUsername(this.regInfo.username)
-        user.setEmail(this.regInfo.email)
-        user.setPassword(this.regInfo.password)
-        user.set('qq', this.regInfo.qq)
-        user.set('nick', this.regInfo.nick)
-        user.set('permission', 'tourist')
-        user.set('avatar', 'http://q1.qlogo.cn/g?b=qq&nk=' + String(this.regInfo.qq) + '&s=640')
+        const user = new AV.User();
+        user.setUsername(this.regInfo.username);
+        user.setEmail(this.regInfo.email);
+        user.setPassword(this.regInfo.password);
+        user.set("qq", this.regInfo.qq);
+        user.set("nick", this.regInfo.nick);
+        user.set("permission", "tourist");
+        user.set("avatar", "http://q1.qlogo.cn/g?b=qq&nk=" + String(this.regInfo.qq) + "&s=640");
         user.signUp().then((user) => {
-          this.fail = false
-          this.success = true
-          const theSelf = this
+          this.fail = false;
+          this.success = true;
+          const theSelf = this;
           setTimeout(function () {
-            theSelf.goLogin()
-          }, 2000)
-        })
+            theSelf.goLogin();
+          }, 2000);
+        });
       } catch (error) {
-        this.fail = true
+        this.fail = true;
       }
     }
   },
   created () {
-    const AV = this.$store.state.AV
+    const AV = this.$store.state.AV;
     if (AV.applicationId == null || AV.applicationKey == null) {
-      this.failed = true
-      console.log('%c' + '[Register] 注册界面渲染异常，请确认是否初始化 LeanCloud，以及数据结构是否正确', 'color:' + 'red')
+      this.failed = true;
+      console.log("%c" + "[Register] 注册界面渲染异常，请确认是否初始化 LeanCloud，以及数据结构是否正确", "color:" + "red");
     }
   }
-}
+};
 </script>
 
 <style scoped>

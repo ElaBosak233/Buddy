@@ -204,11 +204,11 @@
 </template>
 
 <script>
-import { QrcodeStream } from 'vue-qrcode-reader'
+import { QrcodeStream } from "vue-qrcode-reader";
 export default {
-  name: 'ProjectSettings',
+  name: "ProjectSettings",
   components: { QrcodeStream },
-  inject: ['reload'],
+  inject: ["reload"],
   data: () => {
     return {
       info: false,
@@ -219,61 +219,61 @@ export default {
           showBtn: true
         },
         success: false,
-        result: '',
-        error: '',
+        result: "",
+        error: "",
         info: {
-          name: ''
+          name: ""
         }
       },
       showBtn: true,
       ProjectInfo: {
         Chinese: {
-          name: '语文',
-          src: 'https://i.loli.net/2021/04/04/GP7zjpUDsuZfWya.png'
+          name: "语文",
+          src: "https://i.loli.net/2021/04/04/GP7zjpUDsuZfWya.png"
         },
         Math: {
-          name: '数学',
-          src: 'https://i.loli.net/2021/04/04/G31NxKtOePzj5ku.png'
+          name: "数学",
+          src: "https://i.loli.net/2021/04/04/G31NxKtOePzj5ku.png"
         },
         English: {
-          name: '英语',
-          src: 'https://i.loli.net/2021/04/04/q3CcNThxAujDmMR.png'
+          name: "英语",
+          src: "https://i.loli.net/2021/04/04/q3CcNThxAujDmMR.png"
         },
         Physics: {
-          name: '物理',
-          src: 'https://i.loli.net/2021/04/04/eKOJbQqG6aURpin.png'
+          name: "物理",
+          src: "https://i.loli.net/2021/04/04/eKOJbQqG6aURpin.png"
         },
         Chemistry: {
-          name: '化学',
-          src: 'https://i.loli.net/2021/04/04/DS8InMkAWzcPmsp.png'
+          name: "化学",
+          src: "https://i.loli.net/2021/04/04/DS8InMkAWzcPmsp.png"
         },
         Biology: {
-          name: '生物',
-          src: 'https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=2680548674,1846022061&fm=26&gp=0.jpg'
+          name: "生物",
+          src: "https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=2680548674,1846022061&fm=26&gp=0.jpg"
         },
         Politics: {
-          name: '政治',
-          src: 'https://i.loli.net/2021/04/04/BC1OqAd7cJeKUQ8.png'
+          name: "政治",
+          src: "https://i.loli.net/2021/04/04/BC1OqAd7cJeKUQ8.png"
         },
         History: {
-          name: '历史',
-          src: 'https://i.loli.net/2021/04/04/aXdfMuezykmtSsK.png'
+          name: "历史",
+          src: "https://i.loli.net/2021/04/04/aXdfMuezykmtSsK.png"
         },
         Geography: {
-          name: '地理',
-          src: 'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fimg.mp.itc.cn%2Fupload%2F20160726%2F316b150ecd9245c4bdc70388a1cfdd81_th.jpg&refer=http%3A%2F%2Fimg.mp.itc.cn&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1620126167&t=83d9142a4eb836d520b8e16734ea90fa'
+          name: "地理",
+          src: "https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fimg.mp.itc.cn%2Fupload%2F20160726%2F316b150ecd9245c4bdc70388a1cfdd81_th.jpg&refer=http%3A%2F%2Fimg.mp.itc.cn&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1620126167&t=83d9142a4eb836d520b8e16734ea90fa"
         },
         It: {
-          name: '信息技术',
-          src: 'https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=143206317,2886852251&fm=26&gp=0.jpg'
+          name: "信息技术",
+          src: "https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=143206317,2886852251&fm=26&gp=0.jpg"
         },
         Gt: {
-          name: '通用技术',
-          src: 'https://i.loli.net/2021/04/04/VTKNzwJYIRcSDOu.png'
+          name: "通用技术",
+          src: "https://i.loli.net/2021/04/04/VTKNzwJYIRcSDOu.png"
         },
         Other: {
-          name: '其他',
-          src: 'https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=3303112710,2958920342&fm=26&gp=0.jpg'
+          name: "其他",
+          src: "https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=3303112710,2958920342&fm=26&gp=0.jpg"
         }
       },
       Project: {
@@ -302,204 +302,204 @@ export default {
         Other: []
       },
       editedProject: {
-        objectId: '',
-        title: '',
-        subject: '',
-        content: '',
-        createdAt: '',
+        objectId: "",
+        title: "",
+        subject: "",
+        content: "",
+        createdAt: "",
         finished: [],
         info: {
-          finishedNum: '',
+          finishedNum: "",
           unFinished: [],
-          totalMember: ''
+          totalMember: ""
         }
       },
       defaultProject: {
-        objectId: '',
-        title: '',
-        subject: '',
-        content: '',
-        createdAt: '',
+        objectId: "",
+        title: "",
+        subject: "",
+        content: "",
+        createdAt: "",
         finished: [],
         info: {
-          finishedNum: '',
+          finishedNum: "",
           unFinished: [],
-          totalMember: ''
+          totalMember: ""
         }
       }
-    }
+    };
   },
   mounted: function () {
-    const AV = this.$store.state.AV
-    new AV.Query('Project').find().then((res) => {
+    const AV = this.$store.state.AV;
+    new AV.Query("Project").find().then((res) => {
       res.forEach((i) => {
         switch (i.attributes.subject) {
-          case 'chinese':
-            this.Project.Chinese.push(i)
-            break
-          case 'math':
-            this.Project.Math.push(i)
-            break
-          case 'english':
-            this.Project.English.push(i)
-            break
-          case 'physics':
-            this.Project.Physics.push(i)
-            break
-          case 'chemistry':
-            this.Project.Chemistry.push(i)
-            break
-          case 'biology':
-            this.Project.Biology.push(i)
-            break
-          case 'politics':
-            this.Project.Politics.push(i)
-            break
-          case 'history':
-            this.Project.History.push(i)
-            break
-          case 'geography':
-            this.Project.Geography.push(i)
-            break
-          case 'it':
-            this.Project.IT.push(i)
-            break
-          case 'gt':
-            this.Project.GT.push(i)
-            break
-          case 'other':
-            this.Project.Other.push(i)
-            break
+          case "chinese":
+            this.Project.Chinese.push(i);
+            break;
+          case "math":
+            this.Project.Math.push(i);
+            break;
+          case "english":
+            this.Project.English.push(i);
+            break;
+          case "physics":
+            this.Project.Physics.push(i);
+            break;
+          case "chemistry":
+            this.Project.Chemistry.push(i);
+            break;
+          case "biology":
+            this.Project.Biology.push(i);
+            break;
+          case "politics":
+            this.Project.Politics.push(i);
+            break;
+          case "history":
+            this.Project.History.push(i);
+            break;
+          case "geography":
+            this.Project.Geography.push(i);
+            break;
+          case "it":
+            this.Project.IT.push(i);
+            break;
+          case "gt":
+            this.Project.GT.push(i);
+            break;
+          case "other":
+            this.Project.Other.push(i);
+            break;
         }
-      })
-    })
-    if (AV.User.current().get('permission') === 'student') {
-      this.showBtn = false
+      });
+    });
+    if (AV.User.current().get("permission") === "student") {
+      this.showBtn = false;
     }
   },
   methods: {
     checkProject: function (item) {
-      this.editedProject.objectId = item.id
-      this.editedProject.title = item.attributes.title
-      this.editedProject.content = item.attributes.content
-      this.editedProject.createdAt = item.createdAt
-      this.editedProject.subject = item.attributes.subject
-      this.editedProject.finished = item.attributes.finished
-      this.editedProject.info.finishedNum = this.editedProject.finished.length
-      const AV = this.$store.state.AV
-      const student = new AV.Query('_User')
-      student.equalTo('permission', 'student')
+      this.editedProject.objectId = item.id;
+      this.editedProject.title = item.attributes.title;
+      this.editedProject.content = item.attributes.content;
+      this.editedProject.createdAt = item.createdAt;
+      this.editedProject.subject = item.attributes.subject;
+      this.editedProject.finished = item.attributes.finished;
+      this.editedProject.info.finishedNum = this.editedProject.finished.length;
+      const AV = this.$store.state.AV;
+      const student = new AV.Query("_User");
+      student.equalTo("permission", "student");
       student.find().then((res) => {
-        this.editedProject.info.totalMember = res.length
-        const array = []
-        const array2 = this.editedProject.finished
+        this.editedProject.info.totalMember = res.length;
+        const array = [];
+        const array2 = this.editedProject.finished;
         res.forEach((i) => {
-          array.push(i.getObjectId())
-        })
+          array.push(i.getObjectId());
+        });
         this.subArray(array, array2).forEach((stuId) => {
           student.get(stuId).then((name) => {
-            this.editedProject.info.unFinished.push(name.get('real'))
-          })
-        })
-      })
-      this.info = true
+            this.editedProject.info.unFinished.push(name.get("real"));
+          });
+        });
+      });
+      this.info = true;
     },
     saveProject () {
-      const AV = this.$store.state.AV
-      const save = AV.Object.createWithoutData('Project', this.editedProject.objectId)
-      save.set('title', this.editedProject.title)
-      save.set('content', this.editedProject.content)
-      save.save()
-      this.info = false
-      this.reload()
+      const AV = this.$store.state.AV;
+      const save = AV.Object.createWithoutData("Project", this.editedProject.objectId);
+      save.set("title", this.editedProject.title);
+      save.set("content", this.editedProject.content);
+      save.save();
+      this.info = false;
+      this.reload();
     },
     deleteProject () {
-      const AV = this.$store.state.AV
-      const del = AV.Object.createWithoutData('Project', this.editedProject.objectId)
-      del.destroy()
-      const theSelf = this
+      const AV = this.$store.state.AV;
+      const del = AV.Object.createWithoutData("Project", this.editedProject.objectId);
+      del.destroy();
+      const theSelf = this;
       setTimeout(function () {
-        theSelf.reload()
-      }, 500)
+        theSelf.reload();
+      }, 500);
     },
     newProject (param) {
-      this.editedProject = this.defaultProject
-      this.editedProject.subject = param
-      this.newP = true
+      this.editedProject = this.defaultProject;
+      this.editedProject.subject = param;
+      this.newP = true;
     },
     submitProject () {
-      const AV = this.$store.state.AV
-      const newPro = new AV.Object('Project')
-      newPro.set('title', this.editedProject.title)
-      newPro.set('content', this.editedProject.content)
-      newPro.set('subject', this.editedProject.subject.toLowerCase())
-      newPro.set('finished', [])
-      newPro.save()
-      this.reload()
+      const AV = this.$store.state.AV;
+      const newPro = new AV.Object("Project");
+      newPro.set("title", this.editedProject.title);
+      newPro.set("content", this.editedProject.content);
+      newPro.set("subject", this.editedProject.subject.toLowerCase());
+      newPro.set("finished", []);
+      newPro.save();
+      this.reload();
     },
     subArray (arr1, arr2) {
       for (let i = arr1.length - 1; i >= 0; i--) {
-        const a = arr1[i]
+        const a = arr1[i];
         for (let j = arr2.length - 1; j >= 0; j--) {
-          const b = arr2[j]
+          const b = arr2[j];
           if (a === b) {
-            arr1.splice(i, 1)
-            arr2.splice(j, 1)
-            break
+            arr1.splice(i, 1);
+            arr2.splice(j, 1);
+            break;
           }
         }
       }
-      return arr1
+      return arr1;
     },
     onDecode (result) {
-      this.QRCodeScan.result = result
+      this.QRCodeScan.result = result;
     },
     async onInit (promise) {
       try {
-        await promise
+        await promise;
       } catch (error) {
-        if (error.name === 'NotAllowedError') {
-          this.error = 'ERROR: 您需要授予相机访问权限'
-        } else if (error.name === 'NotFoundError') {
-          this.error = 'ERROR: 这个设备上没有摄像头'
-        } else if (error.name === 'NotSupportedError') {
-          this.error = 'ERROR: 所需的安全上下文(HTTPS、本地主机)'
-        } else if (error.name === 'NotReadableError') {
-          this.error = 'ERROR: 相机被占用'
-        } else if (error.name === 'OverconstrainedError') {
-          this.error = 'ERROR: 安装摄像头不合适'
-        } else if (error.name === 'StreamApiNotSupportedError') {
-          this.error = 'ERROR: 此浏览器不支持流API'
+        if (error.name === "NotAllowedError") {
+          this.error = "ERROR: 您需要授予相机访问权限";
+        } else if (error.name === "NotFoundError") {
+          this.error = "ERROR: 这个设备上没有摄像头";
+        } else if (error.name === "NotSupportedError") {
+          this.error = "ERROR: 所需的安全上下文(HTTPS、本地主机)";
+        } else if (error.name === "NotReadableError") {
+          this.error = "ERROR: 相机被占用";
+        } else if (error.name === "OverconstrainedError") {
+          this.error = "ERROR: 安装摄像头不合适";
+        } else if (error.name === "StreamApiNotSupportedError") {
+          this.error = "ERROR: 此浏览器不支持流API";
         }
       }
     }
   },
   computed: {
     userObject () {
-      return this.QRCodeScan.result
+      return this.QRCodeScan.result;
     }
   },
   watch: {
     userObject (val) {
-      const AV = this.$store.state.AV
-      const query = new AV.Query('_User')
+      const AV = this.$store.state.AV;
+      const query = new AV.Query("_User");
       query.get(val).then((res) => {
-        this.QRCodeScan.info.name = res.get('real')
-      })
-      const array = [this.QRCodeScan.result]
-      const update = AV.Object.createWithoutData('Project', this.editedProject.objectId)
-      update.addUnique('finished', array)
+        this.QRCodeScan.info.name = res.get("real");
+      });
+      const array = [this.QRCodeScan.result];
+      const update = AV.Object.createWithoutData("Project", this.editedProject.objectId);
+      update.addUnique("finished", array);
       update.save().then(() => {
-        this.QRCodeScan.success = true
-      })
+        this.QRCodeScan.success = true;
+      });
     },
     info (val) {
       if (val === false) {
-        this.reload()
+        this.reload();
       }
     }
   }
-}
+};
 </script>
 
 <style scoped>

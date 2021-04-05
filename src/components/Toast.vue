@@ -24,63 +24,63 @@
 </template>
 
 <script>
-import Push from 'push.js'
+import Push from "push.js";
 export default {
-  name: 'Toast',
+  name: "Toast",
   data: function () {
     return {
       ToastData: {
         open: false,
-        type: '',
-        title: '',
-        content: '',
-        messenger: '',
-        messenger_avatar: ''
+        type: "",
+        title: "",
+        content: "",
+        messenger: "",
+        messenger_avatar: ""
       }
-    }
+    };
   },
   mounted () {
     const getToast = setInterval(() => {
-      const AV = this.$store.state.AV
+      const AV = this.$store.state.AV;
       if (AV.applicationId == null || AV.applicationKey == null) {
       } else {
-        const toastQuery = new AV.Query('Toast')
-        toastQuery.descending('updatedAt')
-        const ToastData = this.ToastData
+        const toastQuery = new AV.Query("Toast");
+        toastQuery.descending("updatedAt");
+        const ToastData = this.ToastData;
         toastQuery.first().then(function (res) {
-          const d = new Date()
-          if (d.getTime() - res.get('updatedAt').getTime() <= 10500) {
+          const d = new Date();
+          if (d.getTime() - res.get("updatedAt").getTime() <= 10500) {
             /**
              * Snackbar 发送消息
              */
-            ToastData.title = res.get('title')
-            ToastData.content = res.get('content')
-            ToastData.messenger = res.get('messenger')
-            ToastData.type = res.get('type')
-            ToastData.messenger_avatar = res.get('messenger_avatar')
-            ToastData.open = true
+            ToastData.title = res.get("title");
+            ToastData.content = res.get("content");
+            ToastData.messenger = res.get("messenger");
+            ToastData.type = res.get("type");
+            ToastData.messenger_avatar = res.get("messenger_avatar");
+            ToastData.open = true;
             /**
              * Push.js 向桌面发送消息
              */
-            Push.create(ToastData.messenger + ' — ' + ToastData.title, {
+            Push.create(ToastData.messenger + " — " + ToastData.title, {
               body: ToastData.content,
-              icon: 'https://i.loli.net/2021/03/27/SQmOWxoejaRBXIf.png',
+              icon: "https://i.loli.net/2021/03/27/SQmOWxoejaRBXIf.png",
               timeout: 5000,
               onClick: function () {
-                window.focus()
-                this.close()
+                window.focus();
+                this.close();
               }
-            })
-            console.log('%c' + '[Toast] 新通知来自 ' + ToastData.messenger, 'color:' + 'blue')
+            });
+            console.log("%c" + "[Toast] 新通知来自 " + ToastData.messenger, "color:" + "blue");
           }
-        })
+        });
       }
-    }, 10000)
-    this.$once('hook:beforeDestroy', () => {
-      clearInterval(getToast)
-    })
+    }, 10000);
+    this.$once("hook:beforeDestroy", () => {
+      clearInterval(getToast);
+    });
   }
-}
+};
 </script>
 
 <style scoped>

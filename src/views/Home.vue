@@ -97,30 +97,30 @@
 <script>
 
 export default {
-  name: 'Home',
+  name: "Home",
   data: () => ({
     items: [
       {
-        src: 'https://i.loli.net/2021/01/01/AycGBmqjKXQ1Es6.png'
+        src: "https://i.loli.net/2021/01/01/AycGBmqjKXQ1Es6.png"
       },
       {
-        src: 'https://i.loli.net/2021/01/01/w3XCbI8PZBdKTm7.png'
+        src: "https://i.loli.net/2021/01/01/w3XCbI8PZBdKTm7.png"
       },
       {
-        src: 'https://i.loli.net/2021/01/01/AnaQkKuJYFqlm3s.png'
+        src: "https://i.loli.net/2021/01/01/AnaQkKuJYFqlm3s.png"
       }
     ],
-    cardColor: 'blue darken-3',
+    cardColor: "blue darken-3",
     btnStats: {
       loading: false,
-      text: '载入数据源',
-      color: 'success',
+      text: "载入数据源",
+      color: "success",
       disable: true
     },
     disBtnStats: {
       loading: false,
-      text: '卸载数据源',
-      color: 'error',
+      text: "卸载数据源",
+      color: "error",
       disable: true
     },
     showForm: true,
@@ -134,137 +134,137 @@ export default {
        * 初始化数据源
        */
       try {
-        const AV = this.$store.state.AV
+        const AV = this.$store.state.AV;
         AV.init({
           appId: this.$store.state.appId,
           appKey: this.$store.state.appKey,
           serverURL: this.$store.state.serverURL
-        })
-        const initialization = new AV.Object('Initialization')
-        initialization.set('Date', this.getNowFormatDate())
+        });
+        const initialization = new AV.Object("Initialization");
+        initialization.set("Date", this.getNowFormatDate());
         initialization.save().then((todo) => {
-          console.log('%c' + '[LeanCloud]数据源初始化成功', 'color:' + 'green')
-          localStorage.serverURL = this.$store.state.serverURL
-          localStorage.appId = this.$store.state.appId
-          localStorage.appKey = this.$store.state.appKey
-          this.textFieldDisable = true
-          this.btnStats.disable = true
-          this.failed = false
-          this.success = true
-          this.disBtnStats.disable = false
-          this.$store.state.stats.LeanCloudLoaded = true
+          console.log("%c" + "[LeanCloud]数据源初始化成功", "color:" + "green");
+          localStorage.serverURL = this.$store.state.serverURL;
+          localStorage.appId = this.$store.state.appId;
+          localStorage.appKey = this.$store.state.appKey;
+          this.textFieldDisable = true;
+          this.btnStats.disable = true;
+          this.failed = false;
+          this.success = true;
+          this.disBtnStats.disable = false;
+          this.$store.state.stats.LeanCloudLoaded = true;
         }, (error) => {
-          console.log('%c' + '[LeanCloud]数据源初始化失败 ' + error, 'color:' + 'red')
-          this.failed = true
-        })
+          console.log("%c" + "[LeanCloud]数据源初始化失败 " + error, "color:" + "red");
+          this.failed = true;
+        });
       } catch (e) {
-        console.log('%c' + '[LeanCloud]数据源初始化失败 ' + e, 'color:' + 'red')
-        this.failed = true
+        console.log("%c" + "[LeanCloud]数据源初始化失败 " + e, "color:" + "red");
+        this.failed = true;
       }
       /**
        * 初始化数据结构
        */
-      const theSelf = this
+      const theSelf = this;
       setTimeout(function init () {
-        const AV = theSelf.$store.state.AV
-        new AV.Query('Initialization').find().then((array) => {
+        const AV = theSelf.$store.state.AV;
+        new AV.Query("Initialization").find().then((array) => {
           if (array.length === 1) {
             try {
-              const schema = require('../utils/schema')
-              schema.initUser(theSelf) // 用户
-              schema.initCurriculum(theSelf) // 课程表
-              schema.initToast(theSelf) // 通知
-              schema.initProject(theSelf) // 作业
+              const schema = require("../utils/schema");
+              schema.initUser(theSelf); // 用户
+              schema.initCurriculum(theSelf); // 课程表
+              schema.initToast(theSelf); // 通知
+              schema.initProject(theSelf); // 作业
             } catch (e) {
-              console.log('%c' + '[LeanCloud]数据结构初始化失败 ' + e, 'color:' + 'red')
+              console.log("%c" + "[LeanCloud]数据结构初始化失败 " + e, "color:" + "red");
             }
           }
-        })
-      }, 500)
+        });
+      }, 500);
     },
     dis: function () {
-      this.success = false
-      this.$store.state.appKey = null
-      this.$store.state.appId = null
-      this.$store.state.serverURL = null
-      localStorage.removeItem('appKey')
-      localStorage.removeItem('appId')
-      localStorage.removeItem('serverURL')
-      localStorage.removeItem('sessionToken')
-      this.showForm = true
-      this.btnStats.disable = false
-      this.textFieldDisable = false
-      this.disBtnStats.disable = true
-      location.reload()
+      this.success = false;
+      this.$store.state.appKey = null;
+      this.$store.state.appId = null;
+      this.$store.state.serverURL = null;
+      localStorage.removeItem("appKey");
+      localStorage.removeItem("appId");
+      localStorage.removeItem("serverURL");
+      localStorage.removeItem("sessionToken");
+      this.showForm = true;
+      this.btnStats.disable = false;
+      this.textFieldDisable = false;
+      this.disBtnStats.disable = true;
+      location.reload();
     },
     getNowFormatDate: function () {
-      const date = new Date()
-      const seperator1 = '-'
-      const year = date.getFullYear()
-      let month = date.getMonth() + 1
-      let strDate = date.getDate()
+      const date = new Date();
+      const seperator1 = "-";
+      const year = date.getFullYear();
+      let month = date.getMonth() + 1;
+      let strDate = date.getDate();
       if (month >= 1 && month <= 9) {
-        month = '0' + month
+        month = "0" + month;
       }
       if (strDate >= 0 && strDate <= 9) {
-        strDate = '0' + strDate
+        strDate = "0" + strDate;
       }
-      return year + seperator1 + month + seperator1 + strDate
+      return year + seperator1 + month + seperator1 + strDate;
     }
   },
   mounted: function () {
-    const AV = this.$store.state.AV
+    const AV = this.$store.state.AV;
     /**
      * 判断 AV 数据中 appId 和 appKey 是否存在
      */
     if (AV.applicationKey == null || AV.applicationId == null) {
-      this.textFieldDisable = false
-      this.btnStats.disable = false
+      this.textFieldDisable = false;
+      this.btnStats.disable = false;
     } else {
-      this.success = true
+      this.success = true;
     }
     for (let i = 0; i < this.items.length; i++) {
-      const image = new Image()
-      image.src = this.items[i].src
+      const image = new Image();
+      image.src = this.items[i].src;
       // eslint-disable-next-line no-unused-expressions
-      image.onload
+      image.onload;
     }
     if (localStorage.serverURL) {
-      this.$store.state.serverURL = localStorage.serverURL
+      this.$store.state.serverURL = localStorage.serverURL;
     }
     if (localStorage.appId) {
-      this.$store.state.appId = localStorage.appId
+      this.$store.state.appId = localStorage.appId;
     }
     if (localStorage.appKey) {
-      this.$store.state.appKey = localStorage.appKey
+      this.$store.state.appKey = localStorage.appKey;
     }
     /**
      * 判断 $store 中是否已经存在 appKey 和 appId
      */
     if (this.$store.state.appKey && this.$store.state.appId) {
-      this.disBtnStats.disable = false
-      this.showForm = false
+      this.disBtnStats.disable = false;
+      this.showForm = false;
       if (this.$store.state.stats.LeanCloudLoaded === false) {
-        this.load()
+        this.load();
       }
     }
-    localStorage.appFirstLoaded = true
+    localStorage.appFirstLoaded = true;
     /**
      * 检查 localStorage 是否含有 sessionToken，若有，则读取并登录
      */
     if (localStorage.sessionToken) {
-      const AV = this.$store.state.AV
+      const AV = this.$store.state.AV;
       AV.User.become(localStorage.sessionToken).then((res) => {
-        this.$store.state.userInfo.nick = res.get('nick')
-        this.$store.state.userInfo.qq = res.get('qq')
-        this.$store.state.userInfo.email = res.getEmail()
-        this.$store.state.userInfo.permission = res.get('permission')
-        this.$store.state.userInfo.objectId = res.getObjectId()
-        this.$store.state.userInfo.logined = true
-        this.$store.state.userInfo.username = res.getUsername()
-      })
+        this.$store.state.userInfo.nick = res.get("nick");
+        this.$store.state.userInfo.qq = res.get("qq");
+        this.$store.state.userInfo.email = res.getEmail();
+        this.$store.state.userInfo.permission = res.get("permission");
+        this.$store.state.userInfo.objectId = res.getObjectId();
+        this.$store.state.userInfo.logined = true;
+        this.$store.state.userInfo.username = res.getUsername();
+      });
     }
-    console.log('%c' + '[Buddy]主界面加载完成', 'color:' + 'green')
+    console.log("%c" + "[Buddy]主界面加载完成", "color:" + "green");
   }
-}
+};
 </script>

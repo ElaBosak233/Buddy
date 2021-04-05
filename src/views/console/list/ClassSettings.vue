@@ -236,9 +236,9 @@
 </template>
 
 <script>
-import vueQr from 'vue-qr'
+import vueQr from "vue-qr";
 export default {
-  name: 'ClassSettings',
+  name: "ClassSettings",
   components: { vueQr },
   data: () => ({
     studentFunc: false,
@@ -246,54 +246,54 @@ export default {
     dialog: false,
     info: false,
     QRCodeData: {
-      text: ''
+      text: ""
     },
     dialogDelete: false,
     alert: false,
     permissions: [
-      { name: '学生', value: 'student' },
-      { name: '老师', value: 'teacher' },
-      { name: '班主任', value: 'monitor' }
+      { name: "学生", value: "student" },
+      { name: "老师", value: "teacher" },
+      { name: "班主任", value: "monitor" }
     ],
     headers: [
-      { text: '头像', value: 'avatar', sortable: false },
+      { text: "头像", value: "avatar", sortable: false },
       {
-        text: '用户名',
-        align: 'start',
+        text: "用户名",
+        align: "start",
         sortable: false,
-        value: 'username'
+        value: "username"
       },
-      { text: '真实姓名', value: 'real' },
-      { text: '权限组', value: 'permission' },
-      { text: '班序', value: 'id' },
-      { text: '学籍号', value: 'uid' },
-      { text: 'QQ', value: 'qq', sortable: false },
-      { text: 'Email', value: 'email', sortable: false },
-      { text: '报告', value: 'action', sortable: false } // 曾经有一个人，为了这个语句，浪费了 4 个小时的人生
+      { text: "真实姓名", value: "real" },
+      { text: "权限组", value: "permission" },
+      { text: "班序", value: "id" },
+      { text: "学籍号", value: "uid" },
+      { text: "QQ", value: "qq", sortable: false },
+      { text: "Email", value: "email", sortable: false },
+      { text: "报告", value: "action", sortable: false } // 曾经有一个人，为了这个语句，浪费了 4 个小时的人生
     ],
     user: [],
     editedIndex: -1,
     editedItem: {
-      username: '',
-      objectId: '',
-      real: '',
-      permission: '',
-      id: '',
-      uid: '',
-      qq: '',
-      email: '',
-      avatar: ''
+      username: "",
+      objectId: "",
+      real: "",
+      permission: "",
+      id: "",
+      uid: "",
+      qq: "",
+      email: "",
+      avatar: ""
     },
     defaultItem: {
-      username: '',
-      objectId: '',
-      real: '',
-      permission: '',
-      id: '',
-      uid: '',
-      qq: '',
-      email: '',
-      avatar: ''
+      username: "",
+      objectId: "",
+      real: "",
+      permission: "",
+      id: "",
+      uid: "",
+      qq: "",
+      email: "",
+      avatar: ""
     },
     userProgress: 0,
     userUndoProgress: []
@@ -301,81 +301,81 @@ export default {
 
   computed: {
     formTitle () {
-      return this.editedIndex === -1 ? '新用户' : '编辑用户' + ' - ' + this.user[this.editedIndex].objectId
+      return this.editedIndex === -1 ? "新用户" : "编辑用户" + " - " + this.user[this.editedIndex].objectId;
     }
   },
 
   watch: {
     dialog (val) {
-      val || this.close()
+      val || this.close();
     },
     info (val) {
       if (val === false) {
-        this.editedItem = this.defaultItem
-        this.editedIndex = -1
+        this.editedItem = this.defaultItem;
+        this.editedIndex = -1;
       }
     }
   },
 
   created () {
-    this.initialize()
+    this.initialize();
   },
 
   methods: {
     initialize () {
-      const AV = this.$store.state.AV
-      const user = new AV.Query('_User')
-      user.notEqualTo('username', 'admin')
-      user.ascending('objectId')
+      const AV = this.$store.state.AV;
+      const user = new AV.Query("_User");
+      user.notEqualTo("username", "admin");
+      user.ascending("objectId");
       user.find().then((array) => {
         array.forEach((todo) => {
           const data = {
-            username: todo.get('username'),
-            objectId: todo.get('objectId'),
-            real: todo.get('real'),
-            permission: todo.get('permission'),
-            id: todo.get('id'),
-            uid: todo.get('uid'),
-            qq: todo.get('qq'),
-            avatar: todo.get('avatar'),
-            email: todo.get('email')
-          }
-          this.user.push(data)
-        })
-      })
-      if (AV.User.current().get('permission') === ('admin' || 'monitor')) {
-        this.newUser = true
+            username: todo.get("username"),
+            objectId: todo.get("objectId"),
+            real: todo.get("real"),
+            permission: todo.get("permission"),
+            id: todo.get("id"),
+            uid: todo.get("uid"),
+            qq: todo.get("qq"),
+            avatar: todo.get("avatar"),
+            email: todo.get("email")
+          };
+          this.user.push(data);
+        });
+      });
+      if (AV.User.current().get("permission") === ("admin" || "monitor")) {
+        this.newUser = true;
       }
     },
     editItem (item) {
-      this.editedItem = this.defaultItem
-      this.editedIndex = this.user.indexOf(item)
-      this.editedItem = Object.assign({}, item)
-      this.dialog = true
+      this.editedItem = this.defaultItem;
+      this.editedIndex = this.user.indexOf(item);
+      this.editedItem = Object.assign({}, item);
+      this.dialog = true;
     },
     close () {
-      this.dialog = false
+      this.dialog = false;
       this.$nextTick(() => {
-        this.editedItem = Object.assign({}, this.defaultItem)
-        this.editedIndex = -1
-      })
+        this.editedItem = Object.assign({}, this.defaultItem);
+        this.editedIndex = -1;
+      });
     },
     saveUser () {
-      const AV = this.$store.state.AV
+      const AV = this.$store.state.AV;
       // 创建
-      if (this.editedItem.permission === '' || this.editedItem.real === '' || this.editedItem.qq === '' || this.editedItem.username === '') {
-        this.alert = true
+      if (this.editedItem.permission === "" || this.editedItem.real === "" || this.editedItem.qq === "" || this.editedItem.username === "") {
+        this.alert = true;
       } else {
-        const user = new AV.Object('_User')
-        user.set('username', this.editedItem.username)
-        user.set('real', this.editedItem.real)
-        user.set('permission', this.editedItem.permission)
-        user.set('id', parseInt(this.editedItem.id))
-        user.set('uid', parseInt(this.editedItem.uid))
-        user.set('qq', parseInt(this.editedItem.qq))
-        user.set('avatar', 'http://q1.qlogo.cn/g?b=qq&nk=' + this.editedItem.qq + '&s=640')
-        user.set('email', this.editedItem.email)
-        user.set('password', '123456')
+        const user = new AV.Object("_User");
+        user.set("username", this.editedItem.username);
+        user.set("real", this.editedItem.real);
+        user.set("permission", this.editedItem.permission);
+        user.set("id", parseInt(this.editedItem.id));
+        user.set("uid", parseInt(this.editedItem.uid));
+        user.set("qq", parseInt(this.editedItem.qq));
+        user.set("avatar", "http://q1.qlogo.cn/g?b=qq&nk=" + this.editedItem.qq + "&s=640");
+        user.set("email", this.editedItem.email);
+        user.set("password", "123456");
         user.save().then((res) => {
           const data = {
             username: this.editedItem.username,
@@ -386,110 +386,110 @@ export default {
             uid: parseInt(this.editedItem.uid),
             qq: parseInt(this.editedItem.qq),
             email: this.editedItem.email
-          }
-          this.user.push(data)
-          this.alert = false
-          this.close()
+          };
+          this.user.push(data);
+          this.alert = false;
+          this.close();
         }, (error) => {
-          this.alert = true
-          console.log(error)
-        })
+          this.alert = true;
+          console.log(error);
+        });
       }
     },
     checkReport (item) {
-      this.editedIndex = this.user.indexOf(item)
-      this.editedItem = Object.assign({}, item)
-      this.QRCodeData.text = this.editedItem.objectId
-      this.getProgress()
-      this.getUndoProgress()
-      const AV = this.$store.state.AV
-      const query = new AV.Query('_User')
+      this.editedIndex = this.user.indexOf(item);
+      this.editedItem = Object.assign({}, item);
+      this.QRCodeData.text = this.editedItem.objectId;
+      this.getProgress();
+      this.getUndoProgress();
+      const AV = this.$store.state.AV;
+      const query = new AV.Query("_User");
       query.get(this.editedItem.objectId).then((res) => {
-        if (res.get('permission') === 'student') {
-          this.studentFunc = true
+        if (res.get("permission") === "student") {
+          this.studentFunc = true;
         } else {
-          this.studentFunc = false
+          this.studentFunc = false;
         }
-      })
-      this.info = true
+      });
+      this.info = true;
     },
     arrContain: function (arr, val) {
       for (let i = 0; i < arr.length; i++) {
         if (arr[i] === val) {
-          return true
+          return true;
         }
       }
-      return false
+      return false;
     },
     getProgress () {
-      const AV = this.$store.state.AV
-      const query = new AV.Query('Project')
-      let counter = 0
-      let length = 0
+      const AV = this.$store.state.AV;
+      const query = new AV.Query("Project");
+      let counter = 0;
+      let length = 0;
       query.find().then((res) => {
         res.forEach((todo) => {
-          if (this.arrContain(todo.get('finished'), this.editedItem.objectId)) {
-            counter = counter + 1
+          if (this.arrContain(todo.get("finished"), this.editedItem.objectId)) {
+            counter = counter + 1;
           }
-        })
-        length = res.length
-        this.userProgress = (counter / length).toFixed(4) * 100
-      })
+        });
+        length = res.length;
+        this.userProgress = (counter / length).toFixed(4) * 100;
+      });
     },
     getUndoProgress () {
-      const AV = this.$store.state.AV
-      const query = new AV.Query('Project')
-      const array = []
+      const AV = this.$store.state.AV;
+      const query = new AV.Query("Project");
+      const array = [];
       query.find().then((res) => {
         res.forEach((todo) => {
-          if (!this.arrContain(todo.get('finished'), this.editedItem.objectId)) {
-            let subject = ''
-            switch (todo.get('subject')) {
-              case 'chinese':
-                subject = '语文'
-                break
-              case 'math':
-                subject = '数学'
-                break
-              case 'english':
-                subject = '英语'
-                break
-              case 'physics':
-                subject = '物理'
-                break
-              case 'chemistry':
-                subject = '化学'
-                break
-              case 'politics':
-                subject = '政治'
-                break
-              case 'biology':
-                subject = '生物'
-                break
-              case 'history':
-                subject = '历史'
-                break
-              case 'geography':
-                subject = '地理'
-                break
-              case 'it':
-                subject = '信息技术'
-                break
-              case 'gt':
-                subject = '通用技术'
-                break
-              case 'other':
-                subject = '其他'
-                break
+          if (!this.arrContain(todo.get("finished"), this.editedItem.objectId)) {
+            let subject = "";
+            switch (todo.get("subject")) {
+              case "chinese":
+                subject = "语文";
+                break;
+              case "math":
+                subject = "数学";
+                break;
+              case "english":
+                subject = "英语";
+                break;
+              case "physics":
+                subject = "物理";
+                break;
+              case "chemistry":
+                subject = "化学";
+                break;
+              case "politics":
+                subject = "政治";
+                break;
+              case "biology":
+                subject = "生物";
+                break;
+              case "history":
+                subject = "历史";
+                break;
+              case "geography":
+                subject = "地理";
+                break;
+              case "it":
+                subject = "信息技术";
+                break;
+              case "gt":
+                subject = "通用技术";
+                break;
+              case "other":
+                subject = "其他";
+                break;
             }
-            array.push(subject + '⭐' + todo.get('title'))
+            array.push(subject + "⭐" + todo.get("title"));
           }
-        })
-        this.userUndoProgress = array
-      })
+        });
+        this.userUndoProgress = array;
+      });
     }
   }
-}
+};
 </script>
 
 <style scoped>

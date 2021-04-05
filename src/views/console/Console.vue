@@ -90,12 +90,12 @@
 </template>
 
 <script>
-import MicroPrograms from '@/views/console/list/MicroPrograms'
-import PersonalSettings from '@/views/console/list/PersonalSettings'
-import ClassSettings from '@/views/console/list/ClassSettings'
-import ProjectSettings from '@/views/console/list/ProjectSettings'
+import MicroPrograms from "@/views/console/list/MicroPrograms";
+import PersonalSettings from "@/views/console/list/PersonalSettings";
+import ClassSettings from "@/views/console/list/ClassSettings";
+import ProjectSettings from "@/views/console/list/ProjectSettings";
 export default {
-  name: 'Dashboard',
+  name: "Dashboard",
   components: { ProjectSettings, ClassSettings, PersonalSettings, MicroPrograms },
   data: () => {
     return {
@@ -105,37 +105,37 @@ export default {
         classSettings: true
       },
       User: {
-        avatar: '',
-        username: '',
-        nick: '',
-        permission: ''
+        avatar: "",
+        username: "",
+        nick: "",
+        permission: ""
       }
-    }
+    };
   },
   methods: {
     logOut: function () {
-      const AV = this.$store.state.AV
+      const AV = this.$store.state.AV;
       AV.User.logOut().then(() => {
-        localStorage.removeItem('sessionToken')
-        location.reload()
-      })
+        localStorage.removeItem("sessionToken");
+        location.reload();
+      });
     }
   },
   mounted () {
-    const AV = this.$store.state.AV
-    this.User.username = AV.User.current().getUsername()
-    this.User.nick = AV.User.current().get('nick')
-    this.User.avatar = AV.User.current().get('avatar')
-    this.User.permission = AV.User.current().get('permission')
+    const AV = this.$store.state.AV;
+    this.User.username = AV.User.current().getUsername();
+    this.User.nick = AV.User.current().get("nick");
+    this.User.avatar = AV.User.current().get("avatar");
+    this.User.permission = AV.User.current().get("permission");
     /**
      * 权限判断
      */
-    if (this.User.permission === ('student' || 'tourist')) {
-      this.List.microPrograms = false
+    if (this.User.permission === ("student" || "tourist")) {
+      this.List.microPrograms = false;
     }
-    console.log('%c' + '[Console] 控制台渲染完成', 'color:' + 'green')
+    console.log("%c" + "[Console] 控制台渲染完成", "color:" + "green");
   }
-}
+};
 </script>
 
 <style scoped>

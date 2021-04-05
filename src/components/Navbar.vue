@@ -46,43 +46,43 @@
 
 <script>
 export default {
-  name: 'Navbar',
+  name: "Navbar",
   data: () => ({
     features: [
       {
-        title: '课程表',
-        icon: 'fas fa-table',
-        route: 'Curriculum'
+        title: "课程表",
+        icon: "fas fa-table",
+        route: "Curriculum"
       },
       {
-        title: '公告板',
-        icon: 'fas fa-puzzle-piece',
-        route: 'Toast'
+        title: "公告板",
+        icon: "fas fa-puzzle-piece",
+        route: "Toast"
       },
       {
-        title: '随机点名',
-        icon: 'fas fa-person-booth',
-        route: 'RandomRollCall'
+        title: "随机点名",
+        icon: "fas fa-person-booth",
+        route: "RandomRollCall"
       }
     ]
   }),
   methods: {
     btnNavClick: function (name, routeName) {
-      if (routeName === 'home') {
-        this.$router.push({ path: '/' })
-        this.$store.state.NavbarTitle = 'Buddy'
+      if (routeName === "home") {
+        this.$router.push({ path: "/" });
+        this.$store.state.NavbarTitle = "Buddy";
       } else {
-        if (this.$route.path === '/login' && `/${routeName}` === '/console') {
-          return
+        if (this.$route.path === "/login" && `/${routeName}` === "/console") {
+          return;
         }
         if (this.$route.path !== `/${routeName}`) {
-          this.$router.push({ path: `/${routeName}` })
-          this.$store.state.NavbarTitle = name
+          this.$router.push({ path: `/${routeName}` });
+          this.$store.state.NavbarTitle = name;
         }
       }
     }
   }
-}
+};
 </script>
 
 <style scoped>

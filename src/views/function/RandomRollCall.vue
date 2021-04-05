@@ -53,87 +53,87 @@
 
 <script>
 export default {
-  name: 'RandomRollCall',
+  name: "RandomRollCall",
   data: () => ({
     length: 0,
-    version: 'N/A',
+    version: "N/A",
     refresh_rate: 1,
     times: 0, // 计次
-    timer: '', // 循环
+    timer: "", // 循环
     array: [],
     stats: {
       id: 0,
-      text: '点我开始',
-      color: '#2196F3',
+      text: "点我开始",
+      color: "#2196F3",
       loading: false
     },
     info: {
       id: null,
-      name: '巴蒂',
-      nick: 'Buddy',
-      avatar: 'https://i.loli.net/2021/01/02/p7wxZNiaFfutEyG.png',
+      name: "巴蒂",
+      nick: "Buddy",
+      avatar: "https://i.loli.net/2021/01/02/p7wxZNiaFfutEyG.png",
       egg: null
     },
     failed: false
   }),
   methods: {
     go: function () {
-      let i = Math.floor((Math.random() * this.length))
+      let i = Math.floor((Math.random() * this.length));
       if (this.stats.id === 0) {
-        this.stats.id = 1
-        this.stats.text = '点我结束'
-        this.stats.color = '#D81B60'
+        this.stats.id = 1;
+        this.stats.text = "点我结束";
+        this.stats.color = "#D81B60";
         this.timer = setInterval(() => {
           // 定义随机变量 i
           // 初始化，删除彩蛋和描述内容
-          this.info.egg = null
+          this.info.egg = null;
           // 覆盖 id、name、real
-          this.info.id = this.array[i].id
-          this.info.name = this.array[i].name
-          this.info.nick = this.array[i].nick
-          this.info.avatar = this.array[i].avatar
-          i = Math.floor((Math.random() * this.length))
-        }, this.refresh_rate)
+          this.info.id = this.array[i].id;
+          this.info.name = this.array[i].name;
+          this.info.nick = this.array[i].nick;
+          this.info.avatar = this.array[i].avatar;
+          i = Math.floor((Math.random() * this.length));
+        }, this.refresh_rate);
       } else {
-        this.stats.id = 0
-        this.stats.text = '点我开始'
-        this.stats.color = '#2196F3'
-        clearInterval(this.timer)
+        this.stats.id = 0;
+        this.stats.text = "点我开始";
+        this.stats.color = "#2196F3";
+        clearInterval(this.timer);
       }
     }
   },
   mounted () {
-    const AV = this.$store.state.AV
+    const AV = this.$store.state.AV;
     if (AV.applicationId == null || AV.applicationKey == null) {
-      this.failed = true
-      console.log('%c' + '[RandomRollCall] 随机点名渲染异常，请确认是否初始化 LeanCloud，以及数据结构是否正确', 'color:' + 'red')
+      this.failed = true;
+      console.log("%c" + "[RandomRollCall] 随机点名渲染异常，请确认是否初始化 LeanCloud，以及数据结构是否正确", "color:" + "red");
     } else {
-      const students = new AV.Query('_User')
-      students.equalTo('permission', 'student')
-      students.ascending('id')
+      const students = new AV.Query("_User");
+      students.equalTo("permission", "student");
+      students.ascending("id");
       students.find().then((array) => {
-        this.length = array.length
+        this.length = array.length;
         array.forEach((todo) => {
           const data = {
-            id: todo.get('id'),
-            name: todo.get('real'),
-            nick: todo.get('nick'),
-            qq: todo.get('qq'),
-            avatar: todo.get('avatar')
-          }
-          this.array.push(data)
-        })
+            id: todo.get("id"),
+            name: todo.get("real"),
+            nick: todo.get("nick"),
+            qq: todo.get("qq"),
+            avatar: todo.get("avatar")
+          };
+          this.array.push(data);
+        });
         for (let i = 0; i < self.length; i++) {
-          const image = new Image()
-          image.src = this.array[i].avatar
+          const image = new Image();
+          image.src = this.array[i].avatar;
           // eslint-disable-next-line no-unused-expressions
-          image.onload
+          image.onload;
         }
-      })
-      console.log('%c' + '[RandomRollCall] 随机点名渲染完成', 'color:' + 'green')
+      });
+      console.log("%c" + "[RandomRollCall] 随机点名渲染完成", "color:" + "green");
     }
   }
-}
+};
 </script>
 
 <style scoped>
