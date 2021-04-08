@@ -191,7 +191,6 @@
       <v-icon left>fab fa-telegram-plane</v-icon>已录入
       <template v-slot:action="{ attrs }">
         <v-btn
-          color="red"
           icon
           v-bind="attrs"
           @click="QRCodeScan.success = false"
@@ -486,12 +485,12 @@ export default {
       const query = new AV.Query("_User");
       query.get(val).then((res) => {
         this.QRCodeScan.info.name = res.get("real");
-      });
-      const array = [this.QRCodeScan.result];
-      const update = AV.Object.createWithoutData("Project", this.editedProject.objectId);
-      update.addUnique("finished", array);
-      update.save().then(() => {
-        this.QRCodeScan.success = true;
+        const array = [this.QRCodeScan.result];
+        const update = AV.Object.createWithoutData("Project", this.editedProject.objectId);
+        update.addUnique("finished", array);
+        update.save().then(() => {
+          this.QRCodeScan.success = true;
+        });
       });
     },
     info (val) {
