@@ -171,10 +171,10 @@ export default {
           if (array.length === 1) {
             try {
               const schema = require("../utils/schema");
-              schema.initUser(theSelf); // 用户
-              schema.initCurriculum(theSelf); // 课程表
-              schema.initToast(theSelf); // 通知
-              schema.initProject(theSelf); // 作业
+              setTimeout(() => { schema.initUser(theSelf); }, 500); // 用户
+              setTimeout(() => { schema.initCurriculum(theSelf); }, 500); // 课程表
+              setTimeout(() => { schema.initToast(theSelf); }, 500); // 通知
+              setTimeout(() => { schema.initProject(theSelf); }, 500); // 作业
             } catch (e) {
               console.log("%c" + "[LeanCloud]数据结构初始化失败 " + e, "color:" + "red");
             }

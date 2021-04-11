@@ -7,7 +7,7 @@
       fade-img-on-scroll
       flat
     >
-      <v-img max-height="35" max-width="35" src="https://avatars.githubusercontent.com/u/80180940?s=60&v=4"></v-img>
+      <v-img max-height="35" max-width="35" src="icon.svg"></v-img>
       <v-chip
         class="ma-2"
         color="primary"
