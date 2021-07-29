@@ -43,6 +43,7 @@ export default {
     const getToast = setInterval(() => {
       const AV = this.$store.state.AV;
       if (AV.applicationId == null || AV.applicationKey == null) {
+        return null;
       } else {
         const toastQuery = new AV.Query("Toast");
         toastQuery.descending("updatedAt");

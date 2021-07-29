@@ -95,6 +95,7 @@ export default {
           // eslint-disable-next-line handle-callback-err
         }, (error) => {
           this.fail = true;
+          console.log(error);
         });
       } catch (error) {
         this.fail = true;

@@ -12,7 +12,7 @@
     "leancloud-storage": "^4.10.1",
     "push.js": "^1.0.12",
     "vconsole": "^3.4.0",
-    "vue": "^2.6.11",
+    "vue": "^2.6.12",
     "vue-qr": "^2.3.0",
     "vue-qrcode-reader": "^2.3.18",
     "vue-router": "^3.2.0",
@@ -39,7 +39,7 @@
     "sass-loader": "^8.0.2",
     "vue-cli-plugin-axios": "0.0.4",
     "vue-cli-plugin-vuetify": "~2.0.9",
-    "vue-template-compiler": "^2.6.11",
+    "vue-template-compiler": "^2.6.14",
     "vuetify-loader": "^1.3.0"
   },
   "browserslist": [

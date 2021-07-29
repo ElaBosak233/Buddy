@@ -16,10 +16,6 @@ import Footer from "@/components/Footer";
 import Agreement from "@/components/Agreement";
 import Toast from "@/components/Toast";
 import Push from "push.js";
-import VConsole from "vconsole";
-// eslint-disable-next-line no-unused-vars
-const vConsole = new VConsole();
-
 export default {
   name: "App",
   components: {
